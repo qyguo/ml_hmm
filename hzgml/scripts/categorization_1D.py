@@ -78,15 +78,15 @@ def gettingsig(input_path, region, variable, boundaries, transform, estimate):
         for data in tqdm(file['test'].iterate(columns, library='pd', step_size=500000), desc=f'Loading {category}', bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}'):
     
             if 'sid' in category:
-                data = data[(data.H_mass >= 100) & (data.H_mass <= 180) & ((data.H_mass < 122) | (data.H_mass > 128))]
+                data = data[(data.H_mass >= 100) & (data.H_mass <= 150) & ((data.H_mass < 115) | (data.H_mass > 135))]
                 data['w'] = data.weight
 
             elif 'tot' in category:
-                data = data[(data.H_mass >= 100) & (data.H_mass <= 180)]
+                data = data[(data.H_mass >= 110) & (data.H_mass <= 150)]
                 data['w'] = data.weight
 
             else:
-                data = data[(data.H_mass >= 122) & (data.H_mass <= 128)]
+                data = data[(data.H_mass >= 115) & (data.H_mass <= 135)]
                 data['w'] = data.weight
            
             # print(data)
