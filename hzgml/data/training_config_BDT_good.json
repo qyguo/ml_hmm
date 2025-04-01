@@ -10,6 +10,7 @@
                   "delta_eta_jj",
                   "jet1_pt", "jet1_eta", "jet1_phi",
                   "jet2_pt", "jet2_eta", "jet2_phi",
+                  "jet1_qgl", "jet2_qgl",
                   "SoftActivityJetNjets5", "min_delta_eta_dimu_jets"
               ],
               "preselections": ["H_mass >= 110", "H_mass <= 150", "trg_single_mu24 == 1"],
@@ -71,7 +72,7 @@
  "two_jet":  {"+train_signal": [],
               "train_mc_background": ["DY_105To160","EWK_LLJJ_M105To160","TTTo2L2Nu","TTToSemiLep","DY_105To160_VBFFilter"],
               "+preselections": [],
-              "inputTree": "two_jet_m110To150",
+              "inputTree": "two_jet",
               "train_variables": [
                   "diMufsr_rc_mass", "diMufsr_rc_pt", "diMufsr_rc_eta", "log_diMufsr_rc_pt", 
                   "z_star", "R_pT",
@@ -80,6 +81,7 @@
                   "delta_eta_jj",
                   "jet1_pt", "jet1_eta", "jet1_phi",
                   "jet2_pt", "jet2_eta", "jet2_phi",
+                  "jet1_qgl", "jet2_qgl",
                   "SoftActivityJetNjets5", "min_delta_eta_dimu_jets"
                                    ],
               "params": [{"silent": 1, "eval_metric": ["logloss", "auc"], "grow_policy": "lossguide", "nthread": 4, "objective": "binary:logistic", "tree_method": "hist", "booster": "gbtree"},

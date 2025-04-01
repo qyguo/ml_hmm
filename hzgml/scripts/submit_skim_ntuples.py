@@ -28,9 +28,10 @@ def main():
     args=getArgs()
     inputdir = args.inputdir
 
-    CONDA_PREFIX = os.getenv("CONDA_PREFIX").replace("/envs/hmumuml", "")
+    #CONDA_PREFIX = os.getenv("CONDA_PREFIX").replace("/envs/hmumuml", "")
+    CONDA_PREFIX = '/afs/cern.ch/work/q/qguo/Hmumu/ML_hmm/hzgml' 
 
-    createScript('scripts/submit_skim_ntuples.sh', f"""#!/bin/bash
+    createScript('scripts/submit_skim_ntuples_Hmm.sh', f"""#!/bin/bash
 
 initdir=$1
 input=$2
@@ -53,8 +54,8 @@ unset __conda_setup
 
 cd $initdir
 source scripts/setup.sh
-echo python scripts/skim_ntuples.py -i $input -o $output
-python scripts/skim_ntuples.py -i $input -o $output
+echo python scripts/skim_ntuples_Hmm.py -i $input -o $output
+python scripts/skim_ntuples_Hmm.py -i $input -o $output
         """)
 
     with open('data/inputs_config.json') as f:
@@ -62,7 +63,7 @@ python scripts/skim_ntuples.py -i $input -o $output
 
     sample_list = config['sample_list']
 
-    condor_list = condor_booklist('scripts/submit_skim_ntuples.sh', 'skim_ntuples')
+    condor_list = condor_booklist('scripts/submit_skim_ntuples_Hmm.sh', 'skim_ntuples_Hmm')
     condor_list.initialdir_in_arguments()
     condor_list.set_JobFlavour('workday')
 

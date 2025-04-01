@@ -14,14 +14,16 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import concatenate
 import tensorflow as tf
 import tensorflow.keras as keras
-import tensorflow_addons as tfa
+#import tensorflow_addons as tfa
 
 import os
+import copy
 from argparse import ArgumentParser
 import json
 import numpy as np
 import pandas as pd
-from root_pandas import *
+import uproot
+#from root_pandas import *
 import pickle
 from sklearn.preprocessing import StandardScaler, QuantileTransformer
 # import xgboost as xgb
@@ -33,18 +35,26 @@ import ROOT
 ROOT.gErrorIgnoreLevel = ROOT.kError + 1
 pd.options.mode.chained_assignment = None
 
+import os
+from datetime import datetime
+
+# Get the current date in the format MMDD
+current_date = datetime.now().strftime("%m%d")
+
 def getArgs():
     """Get arguments from command line."""
     parser = ArgumentParser()
-    parser.add_argument('-c', '--config', action='store', nargs=2, default=['data/training_config_NN.json', 'data/apply_config_NN.json'], help='Region to process')
-    parser.add_argument('-i', '--inputFolder', action='store', default='skimmed_ntuples', help='directory of training inputs')
+    parser.add_argument('-c', '--config', action='store', nargs=2, default=['data/training_config_NN_Hmumu.json', 'data/apply_config_NN.json'], help='Region to process')
+    parser.add_argument('-i', '--inputFolder', action='store', default='/eos/user/q/qguo/vbfhmm/ml/2018/skimmed_ntuples_v4/', help='directory of training inputs')
     parser.add_argument('-m', '--modelFolder', action='store', default='models', help='directory of BDT models')
     parser.add_argument('-o', '--outputFolder', action='store', default='outputs', help='directory for outputs')
-    parser.add_argument('-r', '--region', action='store', choices=['two_jet', 'one_jet', 'zero_jet', 'VH_ttH'], default='zero_jet', help='Region to process')
+    parser.add_argument('-r', '--region', action='store', choices=['two_jet', 'one_jet', 'zero_jet', 'VH_ttH'], default='two_jet', help='Region to process')
     parser.add_argument('-cat', '--category', action='store', nargs='+', help='apply only for specific categories')
 
     parser.add_argument('-s', '--shield', action='store', type=int, default=-1, help='Which variables needs to be shielded')
     parser.add_argument('-a', '--add', action='store', type=int, default=-1, help='Which variables needs to be added')
+    parser.add_argument('-F', '--FixSBH125', action='store_true', default=False, help='Fix the H mass to be 125GeV to get the scores')
+    parser.add_argument('-y', '--year', action='store', default='', help='directory name')
 
     return parser.parse_args()
 
@@ -60,10 +70,13 @@ class ApplyXGBHandler(object):
         args=getArgs()
         self._shield = args.shield
         self._add = args.add
+        self._FixSBH125 = args.FixSBH125
+        self._year = args.year
 
         self._region = region
         self._inputFolder = ''
         self._inputTree = region if region else 'inclusive'
+        self._inputTree = 'two_jet_m110To150'
         self._modelFolder = ''
         self._outputFolder = ''
         self._chunksize = 500000
@@ -78,7 +91,7 @@ class ApplyXGBHandler(object):
         self.algorithm = {}
         self.object_variables = {}
         self.other_variables = {}
-        self.randomIndex = 'eventNumber'
+        self.randomIndex = 'event'
 
         self.models = {}
         self.observables = []
@@ -188,7 +201,10 @@ class ApplyXGBHandler(object):
         self._modelFolder = modelFolder
 
     def setOutputFolder(self, outputFolder):
-        self._outputFolder = outputFolder
+        #self._outputFolder = outputFolder
+        self._outputFolder = outputFolder + f'_dnn_{current_date}'
+        if self._year:  self._outputFolder = self._outputFolder + '_' + self._year
+        if self._FixSBH125:  self._outputFolder += '_SB_HM125'
 
     def preselect(self, data):
 
@@ -203,8 +219,11 @@ class ApplyXGBHandler(object):
             for model in self.models:
                 print('XGB INFO: Loading BDT model: ', model)
                 self.m_models[model] = []
-                for i in range(4):
-                    bst = load_model('%s/NN_%s_%d.tf'%(self._modelFolder, model, i))
+                for i in range(1,5):
+                    print("model", model)
+                    #bst = load_model('%s/NN_%s_%d.tf'%(self._modelFolder, model, i))
+                    bst = load_model('%s/merged_model_fold_%d.h5'%(self._modelFolder, i))
+                    #print("model", model)
                     self.m_models[model].append(bst)
                     del bst
 
@@ -214,58 +233,108 @@ class ApplyXGBHandler(object):
             for model in self.models:
                 print('XGB INFO: Loading score transformer for model: ', model)
                 self.m_tsfs[model] = []
-                for i in range(4):
-                    tsf = pickle.load(open('%s/tsf_%s_%d.pkl'%(self._modelFolder, model, i), "rb" ), encoding = 'latin1' )
+                for i in range(1,5):
+                    #tsf = pickle.load(open('%s/tsf_%s_%d.pkl'%(self._modelFolder, model, i), "rb" ), encoding = 'latin1' )
+                    #model is two_jet ...
+                    tsf = pickle.load(open('%s/DNN_tsf_%d.pkl'%(self._modelFolder, i), "rb" ), encoding = 'latin1' )
                     self.m_tsfs[model].append(tsf)
 
+    def loadScaler(self):
+        import joblib
+        #self.scaler_l = joblib.load('/eos/user/q/qguo/SWAN_projects/ML_test/saved_modela_0616_v2/scaler_0624.pkl')
+        #self.scaler_l = joblib.load('/eos/user/q/qguo/SWAN_projects/ML_test/saved_modela_0729_v2/scaler_0729.pkl')# no jet1_gql and jet2_gql
+        ## train with 2223 without jet1_gql and jet2_gql
+        self.scaler_l = joblib.load('/eos/user/q/qguo/SWAN_projects/ML_test/saved_model_run3_20250331_v1/scaler_20250401.pkl')# no jet1_gql and jet2_gql
+
     def applyBDT(self, category, scale=1):
+        outputbraches = copy.deepcopy(self._outbranches)
+        branches = copy.deepcopy(self._branches)
+        # branches += ["Z_sublead_lepton_pt", "gamma_mvaID_WP80", "gamma_mvaID_WPL"]
+        branches += ["eventWeight", "trg_single_mu24", "nmuons"]
+        outputbraches += ["eventWeight", "trg_single_mu24", "nmuons"]
+        #data_s = None
+        #data_o = None
 
         def format_twojet_inputs(x, model):
 
-            x_jets = x[:, self.object_variables[model]]
+            #x_jets = x[:, self.object_variables[model]]
+            x_mass = x[:, self.object_variables[model]]
             x_others = x[:, self.other_variables[model]]
-            return [x_jets, x_others]
+            #x_mass = x[:, :3]
+            #x_others = x[:, 3:]
+            return [x_mass, x_others]
 
         outputContainer = self._outputFolder + '/' + self._region
+        print("outputContainer: ",outputContainer)
         output_path = outputContainer + '/%s.root' % category
         if not os.path.isdir(outputContainer): os.makedirs(outputContainer)
         if os.path.isfile(output_path): os.remove(output_path)
 
         f_list = []
-        cat_folder = self._inputFolder + '/' + category
+        #cat_folder = self._inputFolder + '/' + category
+        cat_folder = self._inputFolder + '/'
         for f in os.listdir(cat_folder):
-            if f.endswith('.root'): f_list.append(cat_folder + '/' + f)
+        #for f in os.listdir('/eos/user/q/qguo/vbfhmm/ml/2018/skimmed_ntuples_v4/'):
+            #if f.endswith('.root'): f_list.append(cat_folder + '/' + f)
+            if f.endswith('{}.root'.format(category)): f_list.append(cat_folder + '/' + f)
 
         print('-------------------------------------------------')
         for f in f_list: print('XGB INFO: Including sample: ', f)
 
         #TODO put this to the config
-        for data in tqdm(read_root(sorted(f_list), key=self._inputTree, columns=self._branches, chunksize=self._chunksize), bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}', desc='XGB INFO: Applying BDTs to %s samples' % category):
-            data = self.preselect(data)
-
+        #for data in tqdm(read_root(sorted(f_list), key=self._inputTree, columns=self._branches, chunksize=self._chunksize), bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}', desc='XGB INFO: Applying BDTs to %s samples' % category):
+        with uproot.recreate(output_path) as output_file:
             out_data = pd.DataFrame()
+            for filename in tqdm(sorted(f_list), desc='XGB INFO: Applying BDTs to %s samples' % category, bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}'):
+                file = uproot.open(filename)
+                for data in file[self._inputTree].iterate(branches, library='pd', step_size=self._chunksize):
+                    data = self.preselect(data)
+                    
+                    for i in range(4):
 
-            for i in range(4):
-                data_s = data[data[self.randomIndex]%4 == i]
-                data_o = data_s[self._outbranches]
+                        if self._FixSBH125:
+                            mask = ((data['diMufsr_rc_mass'] > 110) & (data['diMufsr_rc_mass'] < 115)) | ((data['diMufsr_rc_mass'] > 135) & (data['diMufsr_rc_mass'] < 150))
+                            data.loc[mask, 'diMufsr_rc_mass'] = 125
 
-                #data_s["H_mass"] = 125
-                #data_s["Z_mass"] = 91
+                        data_s = data[data[self.randomIndex]%4 == i]
+                        #data_o = data_s[self._outbranches]
+                        data_o = data_s[outputbraches]
+                        
+                        for model in self.train_variables.keys():
+                            print(model)
+                            x_Events = data_s[self.train_variables[model]].to_numpy()
+                            #x_Events = data_s[self.train_variables[model]]
+                            #scaler = StandardScaler()
+                            #x_Events = scaler.fit_transform(x_Events)
+                            x_Events = self.scaler_l.transform(x_Events)
+                            if self.algorithm[model] in ["RNNGRU", "DeepSets", "SelfAttention","NN"]:
+                                x_Events = format_twojet_inputs(x_Events, model)
+                            scores = self.m_models[model][i].predict(x_Events)
+                            #scores_t = self.m_tsfs[model][i].transform(scores.reshape(-1,1)).reshape(-1)
+                            if len(scores) > 0:
+                                scores_t = self.m_tsfs[model][i].transform(scores.reshape(-1,1)).reshape(-1)
+                            else:
+                                scores_t = scores
+                            ###
 
-                for model in self.train_variables.keys():
-                    x_Events = data_s[self.train_variables[model]].to_numpy()
-                    if self.algorithm[model] in ["RNNGRU", "DeepSets", "SelfAttention"]:
-                        x_Events = format_twojet_inputs(x_Events, model)
-                    scores = self.m_models[model][i].predict(x_Events)
-                    scores_t = self.m_tsfs[model][i].transform(scores.reshape(-1,1)).reshape(-1)
-                
-                    NN_basename = self.models[model]
-                    data_o[NN_basename] = scores
-                    data_o[NN_basename+'_t'] = scores_t
+                            NN_basename = self.models[model]
+                            data_o[NN_basename] = scores
+                            data_o[NN_basename+'_t'] = scores_t
+                            data_o[NN_basename+'_arctanh'] = np.arctanh(scores)
+                            data_o[NN_basename+'_t_arctanh'] = np.arctanh(scores_t)
 
-                out_data = pd.concat([out_data, data_o], ignore_index=True, sort=False)
+                        out_data = pd.concat([out_data, data_o], ignore_index=True, sort=False)
+                        #out_data.to_root(output_path, key='test', mode='a', index=False)
 
-            out_data.to_root(output_path, key='test', mode='a', index=False)
+            if not out_data.empty:
+                print("not empty")
+                # Convert DataFrame to dictionary of arrays
+                out_data_dict = out_data.to_dict('list')
+                # Write the dictionary of arrays to the ROOT file
+                output_file["test"] = out_data_dict
+            else:
+                print("No data to write to ROOT file.")
+            #output_file['test'] = out_data_dict
 
             del out_data, data_s, data_o
 
@@ -282,8 +351,12 @@ def main():
 
     xgb.loadModels()
     xgb.loadTransformer()
+    xgb.loadScaler()
 
-    with open('data/inputs_config.json') as f:
+    #with open('data/inputs_config.json') as f:
+    #with open('data/inputs_config_22EE_herwig.json') as f:
+    #with open('data/inputs_config_22EE.json') as f:
+    with open('data/inputs_config_2223.json') as f:
         config = json.load(f)
     sample_list = config['sample_list']
 

@@ -1,16 +1,14 @@
 {"common":   {"train_signal": ["VBFHToMuMu_M125"],
-              "train_dd_background": [],
-              "train_mc_background": ["DY_105To160","EWK_LLJJ_M105To160","TTTo2L2Nu","TTToSemiLep","DY_105To160_VBFFilter"],
-              "train_data_background": [],
+              "train_background": ["DY_105To160","EWK_LLJJ_M105To160","TTTo2L2Nu","TTToSemiLep","DY_105To160_VBFFilter"],
               "train_variables": [
-                  "diMufsr_rc_mass", "diMufsr_rc_pt", "diMufsr_rc_eta", "log_diMufsr_rc_pt", 
-                  "z_star", "R_pT",
-                  "diMu-mass_resolution", "diMu-mass_resolution_abs",
+                  "diMufsr_rc_mass","diMu-mass_resolution_abs","diMu-mass_resolution",
                   "dijet_mass", "log_dijet_mass",
+                  "z_star", "R_pT",
                   "delta_eta_jj",
+                  "SoftActivityJetNjets5", "min_delta_eta_dimu_jets",
+                  "diMufsr_rc_pt","diMufsr_rc_eta","log_diMufsr_rc_pt",
                   "jet1_pt", "jet1_eta", "jet1_phi",
-                  "jet2_pt", "jet2_eta", "jet2_phi",
-                  "SoftActivityJetNjets5", "min_delta_eta_dimu_jets"
+                  "jet2_pt", "jet2_eta", "jet2_phi"
               ],
               "preselections": ["H_mass >= 110", "H_mass <= 150", "trg_single_mu24 == 1"],
               "signal_preselections": [],
@@ -69,24 +67,28 @@
                          ]
               },
  "two_jet":  {"+train_signal": [],
-              "train_mc_background": ["DY_105To160","EWK_LLJJ_M105To160","TTTo2L2Nu","TTToSemiLep","DY_105To160_VBFFilter"],
+              "train_mc_background": ["DY_105To160","TTTo2L2Nu"],
               "+preselections": [],
               "inputTree": "two_jet_m110To150",
               "train_variables": [
-                  "diMufsr_rc_mass", "diMufsr_rc_pt", "diMufsr_rc_eta", "log_diMufsr_rc_pt", 
-                  "z_star", "R_pT",
-                  "diMu-mass_resolution", "diMu-mass_resolution_abs",
+                  "diMufsr_rc_mass","diMu-mass_resolution_abs","diMu-mass_resolution",
                   "dijet_mass", "log_dijet_mass",
+                  "z_star", "R_pT",
                   "delta_eta_jj",
+                  "SoftActivityJetNjets5", "min_delta_eta_dimu_jets",
+                  "diMufsr_rc_pt","diMufsr_rc_eta","log_diMufsr_rc_pt",
                   "jet1_pt", "jet1_eta", "jet1_phi",
-                  "jet2_pt", "jet2_eta", "jet2_phi",
-                  "SoftActivityJetNjets5", "min_delta_eta_dimu_jets"
+                  "jet2_pt", "jet2_eta", "jet2_phi"
                                    ],
-              "params": [{"silent": 1, "eval_metric": ["logloss", "auc"], "grow_policy": "lossguide", "nthread": 4, "objective": "binary:logistic", "tree_method": "hist", "booster": "gbtree"},
-                         {"silent": 1, "eval_metric": ["logloss", "auc"], "grow_policy": "lossguide", "nthread": 4, "objective": "binary:logistic", "tree_method": "hist", "booster": "gbtree"},
-                         {"silent": 1, "eval_metric": ["logloss", "auc"], "grow_policy": "lossguide", "nthread": 4, "objective": "binary:logistic", "tree_method": "hist", "booster": "gbtree"},
-                         {"silent": 1, "eval_metric": ["logloss", "auc"], "grow_policy": "lossguide", "nthread": 4, "objective": "binary:logistic", "tree_method": "hist", "booster": "gbtree"}
-                         ]
+              "algorithm": "DeepSets",
+              "object_variables": [0,1,2],
+              "other_variables": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+              "params": [{"lr": 0.0005, "number_of_Phinodes": [16, 16, 16], "Phidropouts": [], "number_of_nodes": [64, 32, 16], "dropouts": []},
+                         {"lr": 0.0005, "number_of_Phinodes": [16, 16, 16], "Phidropouts": [], "number_of_nodes": [64, 32, 16], "dropouts": []},
+                         {"lr": 0.0005, "number_of_Phinodes": [16, 16, 16], "Phidropouts": [], "number_of_nodes": [64, 32, 16], "dropouts": []},
+                         {"lr": 0.0005, "number_of_Phinodes": [16, 16, 16], "Phidropouts": [], "number_of_nodes": [64, 32, 16], "dropouts": []}
+                         ],
+              "reduceLr_r" : 10
               },
  "VBF":      {"train_signal": ["VBF"],
               "train_dd_background": [],

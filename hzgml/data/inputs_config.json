@@ -1,4 +1,25 @@
-{"sample_list": {"dy105":  ["two_jet_run2"],
-                 "dy50":   ["two_jet_run2"],
+{"sample_list": {"DY_105To160":  ["two_jet_run2"],
+                 "EWK_LLJJ_M105To160":   ["two_jet_run2"],
+                 "DY_50MLM":   ["two_jet_run2"],
+                 "DY_50FxFx":   ["two_jet_run2"],
+                 "DY_105To160_VBFFilter":   ["two_jet_run2"],
+                 "VBFHToMuMu_M125":    ["two_jet_run2"],
+                 "TTTo2L2Nu":    ["two_jet_run2"],
+                 "TTToSemiLep":    ["two_jet_run2"],
+                 "ST_tW_top":    ["two_jet_run2"],
+                 "ST_tW_antitop":    ["two_jet_run2"],
+                 "ST_t-channel_top":    ["two_jet_run2"],
+                 "ST_t-channel_antitop":    ["two_jet_run2"],
+                 "ST_s-channel":    ["two_jet_run2"],
+                 "tZq":    ["two_jet_run2"],
                  "data":   ["two_jet_run2"],
-                 "vbf":    ["two_jet_run2"]}}
+                 "EWK_LLJJ_M50":   ["two_jet_run2"],
+                 "ZZTo2L2Q":   ["two_jet_run2"],
+                 "ZZTo2L2Nu":   ["two_jet_run2"],
+                 "ZZTo4L":   ["two_jet_run2"],
+                 "WZTo3LNu":   ["two_jet_run2"],
+                 "WZTo2L2Q":   ["two_jet_run2"],
+                 "WWTo2L2Nu":   ["two_jet_run2"],
+                 "GluGluHToMuMu_M125":   ["two_jet_run2"]
+                }
+}

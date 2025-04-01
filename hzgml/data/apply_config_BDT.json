@@ -1,4 +1,4 @@
-{"common":   {"observables": ["H_mass", "event", "weight", "njets"], "preselections": ["H_mass >= 110", "H_mass <= 150"]},
+{"common":   {"observables": ["H_mass", "diMufsr_rc_mass", "event", "weight", "njets"], "preselections": ["diMufsr_rc_mass >= 110", "diMufsr_rc_mass <= 150"]},
  "VH_ttH": {"#+preselections": ["n_leptons >= 3"], "models": {"VH_ttH": "bdt_score"}},
  "zero_to_one_jet": {"#+preselections": ["njets <= 1"], "models": {"zero_to_one_jet": "bdt_score"}},
  "zero_jet": {"#+preselections": ["njets == 0"], "models": {"zero_jet": "bdt_score"}},

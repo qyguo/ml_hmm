@@ -20,6 +20,12 @@ from pdb import set_trace
 import ROOT
 ROOT.gErrorIgnoreLevel = ROOT.kError + 1
 
+import os
+from datetime import datetime
+
+# Get the current date in the format MMDD
+current_date = datetime.now().strftime("%m%d")
+
 def getArgs():
     """Get arguments from command line."""
     parser = ArgumentParser()
@@ -69,8 +75,8 @@ class XGBoostHandler(object):
 
         self._region = region
 
-        self._inputFolder = '/eos/user/j/jiahua/vbfhmm/mlfile'
-        self._outputFolder = 'models'
+        self._inputFolder = ''
+        self._outputFolder = f'models_{current_date}'
         self._chunksize = 500000
         self._branches = []
         self._sig_branches = []
@@ -98,7 +104,8 @@ class XGBoostHandler(object):
         self.m_score_test_bkg = {}
         self.m_tsf = {}
 
-        self.inputTree = 'inclusive'
+        #self.inputTree = 'inclusive'
+        self.inputTree = ''
         self.train_signal = []
         self.train_data_background = []
         self.train_mc_background = []
@@ -109,8 +116,10 @@ class XGBoostHandler(object):
         self.data_preselections = []
         self.signal_preselections = []
         self.background_preselections = []
-        self.randomIndex = 'eventNumber'
-        self.weight = 'weight'
+        #self.randomIndex = 'eventNumber'
+        self.randomIndex = ''
+        #self.weight = 'weight'
+        self.weight = ''
         self.params = [{'eval_metric': ['auc', 'logloss']}]
         self.early_stopping_rounds = 10
         self.numRound = 10000
@@ -258,26 +267,32 @@ class XGBoostHandler(object):
         sig_list, bkg_mc_list, bkg_dd_list, bkg_data_list = [], [], [], []
         for sig_cat in self.train_signal:
             sig_cat_folder = self._inputFolder #+ '/' + sig_cat
+            print(sig_cat_folder)
             for sig in os.listdir(sig_cat_folder):
-                if sig.endswith('{}_ml.root'.format(sig_cat)): sig_list.append(sig_cat_folder + '/' + sig)
+                #if sig.endswith('{}_ml.root'.format(sig_cat)): sig_list.append(sig_cat_folder + '/' + sig)
+                if sig.endswith('{}.root'.format(sig_cat)): sig_list.append(sig_cat_folder + '/' + sig)
         for bkg_cat in self.train_dd_background:
             bkg_cat_folder = self._inputFolder #+ '/' + bkg_cat
             for bkg in os.listdir(bkg_cat_folder):
-                if bkg.endswith('{}_ml.root'.format(bkg_cat)): bkg_dd_list.append(bkg_cat_folder + '/' + bkg)
+                #if bkg.endswith('{}_ml.root'.format(bkg_cat)): bkg_dd_list.append(bkg_cat_folder + '/' + bkg)
+                if bkg.endswith('{}.root'.format(bkg_cat)): bkg_dd_list.append(bkg_cat_folder + '/' + bkg)
         for bkg_cat in self.train_mc_background:
             bkg_cat_folder = self._inputFolder #+ '/' + bkg_cat
             for bkg in os.listdir(bkg_cat_folder):
-                if bkg.endswith('{}_ml.root'.format(bkg_cat)): bkg_mc_list.append(bkg_cat_folder + '/' + bkg)
+                #if bkg.endswith('{}_ml.root'.format(bkg_cat)): bkg_mc_list.append(bkg_cat_folder + '/' + bkg)
+                if bkg.endswith('{}.root'.format(bkg_cat)): bkg_mc_list.append(bkg_cat_folder + '/' + bkg)
         for bkg_cat in self.train_data_background:
             bkg_cat_folder = self._inputFolder #+ '/' + bkg_cat
             for bkg in os.listdir(bkg_cat_folder):
-                if bkg.endswith('{}_ml.root'.format(bkg_cat)): bkg_data_list.append(bkg_cat_folder + '/' + bkg)
+                #if bkg.endswith('{}_ml.root'.format(bkg_cat)): bkg_data_list.append(bkg_cat_folder + '/' + bkg)
+                if bkg.endswith('{}.root'.format(bkg_cat)): bkg_data_list.append(bkg_cat_folder + '/' + bkg)
 
         print('-------------------------------------------------')
         for sig in sig_list: print('XGB INFO: Adding signal sample: ', sig)
         #TODO put this to the config
         for filename in tqdm(sorted(sig_list), desc='XGB INFO: Loading training signals', bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}'):
             file = uproot.open(filename)
+            print(filename)
             for data in file[self.inputTree].iterate(self._sig_branches, library='pd', step_size=self._chunksize):
                 data = self.preselect(data, 'signal')
                 self.m_data_sig = self.m_data_sig.append(data, ignore_index=True)
@@ -314,8 +329,8 @@ class XGBoostHandler(object):
                     self.m_data_bkg = self.m_data_bkg.append(data, ignore_index=True)
 
     def plot_corr(self, data_type):
-        if not os.path.isdir("plots/corr/"):
-            os.makedirs("plots/corr/")
+        if not os.path.isdir(f"plots_{current_date}/corr/"):
+            os.makedirs(f"plots_{current_date}/corr/")
         if data_type == "sig":
             data = self.m_data_sig
         else:
@@ -337,12 +352,16 @@ class XGBoostHandler(object):
         for i in range(0, len(columns)):
             line = list(data[columns[i]])
             for j in range(0, len(line)):
-                plt.text(i, j, int(line[j]), verticalalignment='center', horizontalalignment='center', fontsize=8)
+                #plt.text(i, j, int(line[j]), verticalalignment='center', horizontalalignment='center', fontsize=8)
+                if not np.isnan(line[j]):
+                    plt.text(i, j, int(line[j]), verticalalignment='center', horizontalalignment='center', fontsize=8)
+
         plt.xticks(np.arange(0, len(columns)), columns, rotation=-90, fontsize=12)
         plt.yticks(np.arange(0, len(columns)), columns, fontsize=12)
         plt.title(self._region)
         plt.tight_layout()
-        plt.savefig("plots/corr/corr_%s_%s.pdf" % (self._region, data_type))
+        plt.savefig(f"plots_{current_date}/corr/corr_%s_%s.pdf" % (self._region, data_type))
+        plt.savefig(f"plots_{current_date}/corr/corr_%s_%s.png" % (self._region, data_type))
 
 
     def prepareData(self, fold=0):
@@ -462,10 +481,11 @@ class XGBoostHandler(object):
 
         if save:
             # create output directory
-            if not os.path.isdir('plots/feature_importance'):
-                os.makedirs('plots/feature_importance')
+            if not os.path.isdir(f'plots_{current_date}/feature_importance'):
+                os.makedirs(f'plots_{current_date}/feature_importance')
             # save figure
-            plt.savefig('plots/feature_importance/%d_BDT_%s_%d.png' % (self._shield+1, self._region, fold))
+            plt.savefig(f'plots_{current_date}/feature_importance/%d_BDT_%s_%d.png' % (self._shield+1, self._region, fold))
+            plt.savefig(f'plots_{current_date}/feature_importance/%d_BDT_%s_%d.pdf' % (self._shield+1, self._region, fold))
 
         if show: plt.show()
 
@@ -505,10 +525,11 @@ class XGBoostHandler(object):
 
         if save:
             # create output directory
-            if not os.path.isdir('plots/roc_curve'):
-                os.makedirs('plots/roc_curve')
+            if not os.path.isdir(f'plots_{current_date}/roc_curve'):
+                os.makedirs(f'plots_{current_date}/roc_curve')
             # save figure
-            plt.savefig('plots/roc_curve/%d_BDT_%s_%d.pdf' % (self._shield+1, self._region, fold))
+            plt.savefig(f'plots_{current_date}/roc_curve/%d_BDT_%s_%d.pdf' % (self._shield+1, self._region, fold))
+            plt.savefig(f'plots_{current_date}/roc_curve/%d_BDT_%s_%d.png' % (self._shield+1, self._region, fold))
 
         if show: plt.show()
 
@@ -595,7 +616,7 @@ class XGBoostHandler(object):
                     acq_optimizer_kwargs={'n_jobs':4})
 
         n_calls = 60
-        exp_dir = 'models/skopt/'
+        exp_dir = f'models_{current_date}/skopt/'
 
         if not os.path.exists(exp_dir):
             os.makedirs(exp_dir)
@@ -663,8 +684,8 @@ class XGBoostHandler(object):
                  'ytick.labelsize'  : label_font_size,
                  'figure.figsize'   : (5,4)}) # w,h
 
-        exp_dir = 'models/skopt/'
-        fig_dir = 'plots/skopt/figures/BDT_region_'+self._region+'_fold'+str(fold)+'/'
+        exp_dir = f'models_{current_date}/skopt/'
+        fig_dir = f'plots_{current_date}/skopt/figures/BDT_region_'+self._region+'_fold'+str(fold)+'/'
 
         if not os.path.exists(fig_dir):
             os.makedirs(fig_dir)
@@ -673,7 +694,8 @@ class XGBoostHandler(object):
         plt.rcdefaults()
 
         # Load results
-        res_loaded = load(exp_dir + 'BDT_region_'+self._region+'_fold'+str(fold) + '.pkl')
+        #res_loaded = load(exp_dir + 'BDT_region_'+self._region+'_fold'+str(fold) + '.pkl')
+        res_loaded = load(exp_dir + 'results_region_'+self._region+'_fold'+str(fold) + '.pkl')
         print(res_loaded)
 
         # Plot evaluations
@@ -681,18 +703,21 @@ class XGBoostHandler(object):
         ax = plot_evaluations(res_loaded)
         plt.tight_layout()
         plt.savefig(fig_dir + 'evaluations.pdf')
+        plt.savefig(fig_dir + 'evaluations.png')
 
         # Plot objective
         fig,ax = plt.subplots()
         ax = plot_objective(res_loaded)
         plt.tight_layout()
         plt.savefig(fig_dir + 'objective.pdf')
+        plt.savefig(fig_dir + 'objective.png')
 
         # Plot convergence
         fig,ax = plt.subplots()
         ax = plot_convergence(res_loaded)
         plt.tight_layout()
         plt.savefig(fig_dir + 'convergence.pdf')
+        plt.savefig(fig_dir + 'convergence.png')
 
         ## Plot regret
         #fig,ax = plt.subplots()
@@ -752,10 +777,12 @@ def main():
         print("param: %s, Val AUC: %f" % xgb_model.getAUC(i))
 
         #xgb_model.plotScore(i, 'test')
-        if args.importance:
-            xgb_model.plotFeaturesImportance(i)
-        if args.roc:
-            xgb_model.plotROC(i)
+        #if args.importance:
+        #    xgb_model.plotFeaturesImportance(i)
+        #if args.roc:
+        #    xgb_model.plotROC(i)
+        xgb_model.plotFeaturesImportance(i)
+        xgb_model.plotROC(i)
 
         xgb_model.transformScore(i)
 

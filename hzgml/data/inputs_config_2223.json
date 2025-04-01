@@ -1,0 +1,15 @@
+{"sample_list": {"DY_105To160":  ["two_jet_run2"],
+                 "VBFHToMuMu_M125":    ["two_jet_run2"],
+                 "TTTo2L2Nu":    ["two_jet_run2"],
+                 "ST_tW_top":    ["two_jet_run2"],
+                 "ST_tW_antitop":    ["two_jet_run2"],
+                 "data":   ["two_jet_run2"],
+                 "ZZTo2L2Q":   ["two_jet_run2"],
+                 "ZZTo4L":   ["two_jet_run2"],
+                 "WZTo3LNu":   ["two_jet_run2"],
+                 "WZTo2L2Q":   ["two_jet_run2"],
+                 "WWTo2L2Nu":   ["two_jet_run2"],
+                 "GluGluHToMuMu_M125":   ["two_jet_run2"],
+                 "ZZTo2L2Nu":    ["two_jet_run2"]
+                }
+}

@@ -51,6 +51,7 @@ The whole ML task consists of training, applying the weights, optimizing the BDT
 #### Make some directories
 ```
 mkdir -p models outputs plots
+mkdir -p models_$(date +%m%d) outputs_$(date +%m%d) plots_$(date +%m%d)
 ```
 
 #### Training a model
@@ -71,6 +72,19 @@ Usage:
   -f, --fold          Which fold to run. Default is -1 (run all folds)
   --save              To save the model into HDF5 files, and the pickle files
 ```
+
+python scripts/train_bdt.py -i /eos/user/q/qguo/vbfhmm/ml/2018/skimmed_ntuples_v3/ -r two_jet --save -f {0,1,2,3} --corr --skopt --skopt-plot
+#python scripts/train_bdt.py -i /eos/user/q/qguo/vbfhmm/ml/2018/skimmed_ntuples_v3/ -r two_jet --save -f 0 --corr --importance --roc  --skopt --skopt-plot 
+python scripts/train_bdt.py -i /eos/user/q/qguo/vbfhmm/ml/2018/skimmed_ntuples_v3/ -r two_jet --save -f {0,1,2,3} --importance --roc
+python scripts/apply_bdt.py -m /afs/cern.ch/work/q/qguo/Hmumu/ML_hmm/hzgml/models_0617/ -r two_jet 
+python scripts/apply_NN.py -m /eos/user/q/qguo/SWAN_projects/ML_test/saved_modela_0616_v2/ -r two_jet -F True
+python scripts/categorization_1D_Hmumu.py -r two_jet -b 10 -i outputs_dnn_0624 -t 
+
+
+###19 variable without the qgl-Likelihood discriminant
+### -y is used to add name tag into the outputname
+python scripts/apply_NN.py -m /eos/user/q/qguo/SWAN_projects/ML_test/saved_modela_0729_v2/ -r two_jet  -y 2022EE   -i /eos/user/q/qguo/vbfhmm/ml/2022EE/skimmed_ntuples/ -F
+python scripts/apply_bdt.py -m models_0729/   -r two_jet  -y 2022EE   -i /eos/user/q/qguo/vbfhmm/ml/2022EE/skimmed_ntuples/ -F
 
 #### Applying the weights
 

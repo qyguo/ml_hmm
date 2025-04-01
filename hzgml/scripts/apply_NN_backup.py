@@ -1,15 +1,30 @@
 #!/usr/bin/env python
-import copy
+from tensorflow.keras.models import Model
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.models import load_model
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.layers import AveragePooling2D
+from tensorflow.keras.layers import MaxPooling2D
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Input
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import concatenate
+import tensorflow as tf
+import tensorflow.keras as keras
+import tensorflow_addons as tfa
+
 import os
 from argparse import ArgumentParser
 import json
 import numpy as np
 import pandas as pd
-import uproot
-# from root_pandas import *
+from root_pandas import *
 import pickle
 from sklearn.preprocessing import StandardScaler, QuantileTransformer
-import xgboost as xgb
+# import xgboost as xgb
 from tqdm import tqdm
 import logging
 from pdb import set_trace
@@ -18,31 +33,23 @@ import ROOT
 ROOT.gErrorIgnoreLevel = ROOT.kError + 1
 pd.options.mode.chained_assignment = None
 
-import os
-from datetime import datetime
-
-# Get the current date in the format MMDD
-current_date = datetime.now().strftime("%m%d")
-
 def getArgs():
     """Get arguments from command line."""
     parser = ArgumentParser()
-    #parser.add_argument('-c', '--config', action='store', nargs=2, default=['data/training_config_BDT.json', 'data/apply_config_BDT.json'], help='Region to process')
-    parser.add_argument('-c', '--config', action='store', nargs=2, default=['data/training_config_BDT_Hmm_RunIII.json', 'data/apply_config_BDT.json'], help='Region to process')
-    parser.add_argument('-i', '--inputFolder', action='store', default='/eos/user/q/qguo/vbfhmm/ml/2018/skimmed_ntuples_v4/', help='directory of training inputs')
+    parser.add_argument('-c', '--config', action='store', nargs=2, default=['data/training_config_NN.json', 'data/apply_config_NN.json'], help='Region to process')
+    parser.add_argument('-i', '--inputFolder', action='store', default='skimmed_ntuples', help='directory of training inputs')
     parser.add_argument('-m', '--modelFolder', action='store', default='models', help='directory of BDT models')
     parser.add_argument('-o', '--outputFolder', action='store', default='outputs', help='directory for outputs')
-    parser.add_argument('-r', '--region', action='store', choices=['two_jet', 'one_jet', 'zero_jet', 'zero_to_one_jet', 'VH_ttH', 'all_jet'], default='two_jet', help='Region to process')
+    parser.add_argument('-r', '--region', action='store', choices=['two_jet', 'one_jet', 'zero_jet', 'VH_ttH'], default='zero_jet', help='Region to process')
     parser.add_argument('-cat', '--category', action='store', nargs='+', help='apply only for specific categories')
 
     parser.add_argument('-s', '--shield', action='store', type=int, default=-1, help='Which variables needs to be shielded')
     parser.add_argument('-a', '--add', action='store', type=int, default=-1, help='Which variables needs to be added')
-    parser.add_argument('-F', '--FixSBH125', action='store_true', default=False, help='Fix the H mass to be 125GeV to get the scores')
-    parser.add_argument('-y', '--year', action='store', default='', help='directory name')
 
     return parser.parse_args()
 
 class ApplyXGBHandler(object):
+
     "Class for applying XGBoost"
 
     def __init__(self, configPath, region=''):
@@ -50,22 +57,15 @@ class ApplyXGBHandler(object):
         print('===============================')
         print('  ApplyXGBHandler initialized')
         print('===============================')
-
         args=getArgs()
         self._shield = args.shield
         self._add = args.add
-        self._FixSBH125 = args.FixSBH125
-        self._year = args.year
 
         self._region = region
         self._inputFolder = ''
         self._inputTree = region if region else 'inclusive'
-        self._inputTree = 'two_jet_m110To150'
-        print("inputTree: ", self._inputTree)
-        #self._inputTree = 'two_jet'
         self._modelFolder = ''
         self._outputFolder = ''
-        #self._outputFolder = f'models_{current_date}'
         self._chunksize = 500000
         self._category = []
         self._branches = []
@@ -75,7 +75,10 @@ class ApplyXGBHandler(object):
         self.m_tsfs = {}
 
         self.train_variables = {}
-        self.randomIndex = 'event'
+        self.algorithm = {}
+        self.object_variables = {}
+        self.other_variables = {}
+        self.randomIndex = 'eventNumber'
 
         self.models = {}
         self.observables = []
@@ -120,11 +123,8 @@ class ApplyXGBHandler(object):
         try:
             stream = open(configPath, 'r')
             configs = json.loads(stream.read())
-            # if (self._add>=0):
-            #     configs["common"]["train_variables"].append(configs["common"]["+train_variables"][self._add])
    
             config = configs["common"]
-
             if 'randomIndex' in config.keys(): self.randomIndex = config['randomIndex']
  
             if self.models:
@@ -132,23 +132,30 @@ class ApplyXGBHandler(object):
     
                     # read from the common settings
                     config = configs["common"]
+                    if self._add >= 0:
+                        config["train_variables"].append(config["+train_variables"][self._add])
                     if 'train_variables' in config.keys(): self.train_variables[model] = config['train_variables'][:]
+                    if "algorithm" in config.keys(): self.algorithm[model] = config['algorithm']
+                    if "object_variables" in config.keys(): self.object_variables[model] = config['object_variables']
+                    if "other_variables" in config.keys(): self.other_variables[model] = config['other_variables']
     
                     # read from the region specific settings
                     if model in configs.keys():
                         config = configs[model]
-                        if self._add >= 0:
-                            config["+train_variables"].append(config["test_variables"][self._add])
                         if 'train_variables' in config.keys(): self.train_variables[model] = config['train_variables'][:]
                         if '+train_variables' in config.keys(): self.train_variables[model] += config['+train_variables']
-                        if self._shield >= 0:
-                            self.train_variables[model].pop(self._shield)
+                        if "algorithm" in config.keys(): self.algorithm[model] = config['algorithm']
+                        if "object_variables" in config.keys(): self.object_variables[model] = config['object_variables']
+                        if "other_variables" in config.keys(): self.other_variables[model] = config['other_variables']
 
-                        print("\n\n")
-                        print(self.train_variables[model])
-                        print(len(self.train_variables[model]))
-                        print("\n\n")
+            if self._shield >= 0:
+                self.train_variables.pop(self._shield)
 
+                print("\n\n")
+                print(self.train_variables)
+                print("\n\n")
+
+ 
         except Exception as e:
             logging.error("Error reading training configuration '{config}'".format(config=configPath))
             logging.error(e)
@@ -181,9 +188,7 @@ class ApplyXGBHandler(object):
         self._modelFolder = modelFolder
 
     def setOutputFolder(self, outputFolder):
-        self._outputFolder = outputFolder + f'_bdt_{current_date}'
-        if self._year:  self._outputFolder = self._outputFolder + '_' + self._year
-        if self._FixSBH125:  self._outputFolder += '_SB_HM125'
+        self._outputFolder = outputFolder
 
     def preselect(self, data):
 
@@ -199,8 +204,7 @@ class ApplyXGBHandler(object):
                 print('XGB INFO: Loading BDT model: ', model)
                 self.m_models[model] = []
                 for i in range(4):
-                    bst = xgb.Booster()
-                    bst.load_model('%s/BDT_%s_%d.h5'%(self._modelFolder, model, i))
+                    bst = load_model('%s/NN_%s_%d.tf'%(self._modelFolder, model, i))
                     self.m_models[model].append(bst)
                     del bst
 
@@ -211,102 +215,59 @@ class ApplyXGBHandler(object):
                 print('XGB INFO: Loading score transformer for model: ', model)
                 self.m_tsfs[model] = []
                 for i in range(4):
-                    tsf = pickle.load(open('%s/BDT_tsf_%s_%d.pkl'%(self._modelFolder, model, i), "rb" ), encoding = 'latin1' )
+                    tsf = pickle.load(open('%s/tsf_%s_%d.pkl'%(self._modelFolder, model, i), "rb" ), encoding = 'latin1' )
                     self.m_tsfs[model].append(tsf)
 
     def applyBDT(self, category, scale=1):
-        outputbraches = copy.deepcopy(self._outbranches)
-        branches = copy.deepcopy(self._branches)
-        # branches += ["Z_sublead_lepton_pt", "gamma_mvaID_WP80", "gamma_mvaID_WPL"]
-        branches += ["eventWeight", "trg_single_mu24", "nmuons"]
-        outputbraches += ["eventWeight", "trg_single_mu24", "nmuons"]
-        # if category == "DYJetsToLL":
-        #     branches.append('n_iso_photons')
-        # if category != "data_fake" and category != "mc_true" and category != "mc_med":
-        #     branches.append('gamma_mvaID_WP80')
-        # if category == "data_fake" or category == "mc_true" or category == "mc_med":
-        #     branches += ['weight_err']
-        #     outputbraches += ['weight_err']
-        if category == "mc_true" or category == "mc_med":
-            branches += ['tagger']
-            outputbraches += ['tagger']
 
-        # print(branches)
-        # print(outputbraches)
-        
+        def format_twojet_inputs(x, model):
+
+            x_jets = x[:, self.object_variables[model]]
+            x_others = x[:, self.other_variables[model]]
+            return [x_jets, x_others]
+
         outputContainer = self._outputFolder + '/' + self._region
-        print("outputContainer: ",outputContainer)
         output_path = outputContainer + '/%s.root' % category
         if not os.path.isdir(outputContainer): os.makedirs(outputContainer)
         if os.path.isfile(output_path): os.remove(output_path)
 
         f_list = []
-        cat_folder = self._inputFolder + '/' 
+        cat_folder = self._inputFolder + '/' + category
         for f in os.listdir(cat_folder):
-            #if f.endswith('{}_ml.root'.format(category)): f_list.append(cat_folder + '/' + f)
-            if f.endswith('{}.root'.format(category)): f_list.append(cat_folder + '/' + f)
+            if f.endswith('.root'): f_list.append(cat_folder + '/' + f)
 
         print('-------------------------------------------------')
         for f in f_list: print('XGB INFO: Including sample: ', f)
 
         #TODO put this to the config
-        # for data in tqdm(read_root(sorted(f_list), key=self._inputTree, columns=branches, chunksize=self._chunksize), bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}', desc='XGB INFO: Applying BDTs to %s samples' % category):
-        with uproot.recreate(output_path) as output_file:
+        for data in tqdm(read_root(sorted(f_list), key=self._inputTree, columns=self._branches, chunksize=self._chunksize), bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}', desc='XGB INFO: Applying BDTs to %s samples' % category):
+            data = self.preselect(data)
+
             out_data = pd.DataFrame()
-            for filename in tqdm(sorted(f_list), desc='XGB INFO: Applying BDTs to %s samples' % category, bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}'):
-                file = uproot.open(filename)
-                for data in file[self._inputTree].iterate(branches, library='pd', step_size=self._chunksize):
-                    data = self.preselect(data)
-                    # data = data[data.Z_sublead_lepton_pt >= 15]
-                    # if category == "DYJetsToLL":
-                    #     data = data[data.n_iso_photons == 0]
-                    # if category != "data_fake" and category != "mc_true" and category != "mc_med":
-                    #     pass
-                    #     # data = data[data.gamma_mvaID_WP80 > 0] #TODO: check this one
-                    #     data = data[data.gamma_mvaID_WPL > 0] #TODO: check this one
 
-                    for i in range(4):
+            for i in range(4):
+                data_s = data[data[self.randomIndex]%4 == i]
+                data_o = data_s[self._outbranches]
 
-                        #data[self.H_mass] = 125
-                        #if ( data[data.diMufsr_rc_mass] > 110 & data[data.diMufsr_rc_mass] < 115 ) | ( data[data.diMufsr_rc_mass] > 135 & data[data.diMufsr_rc_mass] < 150 ):
-                        #    data[data.diMufsr_rc_mass] = 125
-                        if self._FixSBH125:
-                            mask = ((data['diMufsr_rc_mass'] > 110) & (data['diMufsr_rc_mass'] < 115)) | ((data['diMufsr_rc_mass'] > 135) & (data['diMufsr_rc_mass'] < 150))
-                            data.loc[mask, 'diMufsr_rc_mass'] = 125
+                #data_s["H_mass"] = 125
+                #data_s["Z_mass"] = 91
 
-                        data_s = data[data[self.randomIndex]%4 == i]
-                        data_o = data_s[outputbraches]
-
-                        for model in self.train_variables.keys():
-                            x_Events = data_s[self.train_variables[model]]
-                            dEvents = xgb.DMatrix(x_Events)
-                            scores = self.m_models[model][i].predict(dEvents)
-                            if len(scores) > 0:
-                                scores_t = self.m_tsfs[model][i].transform(scores.reshape(-1,1)).reshape(-1)
-                            else:
-                                scores_t = scores
-                        
-                            xgb_basename = self.models[model]
-                            data_o[xgb_basename] = scores
-                            data_o[xgb_basename+'_t'] = scores_t
-
-                        out_data = pd.concat([out_data, data_o], ignore_index=True, sort=False)
-                #out_data.to_root(output_path, key='test', mode='a', index=False)
+                for model in self.train_variables.keys():
+                    x_Events = data_s[self.train_variables[model]].to_numpy()
+                    if self.algorithm[model] in ["RNNGRU", "DeepSets", "SelfAttention"]:
+                        x_Events = format_twojet_inputs(x_Events, model)
+                    scores = self.m_models[model][i].predict(x_Events)
+                    scores_t = self.m_tsfs[model][i].transform(scores.reshape(-1,1)).reshape(-1)
                 
-            # Convert DataFrame to dictionary of arrays
-            #out_data_dict = out_data.to_dict('list')
+                    NN_basename = self.models[model]
+                    data_o[NN_basename] = scores
+                    data_o[NN_basename+'_t'] = scores_t
 
-            if not out_data.empty:
-                print("not empty")
-                # Convert DataFrame to dictionary of arrays
-                out_data_dict = out_data.to_dict('list')
-                # Write the dictionary of arrays to the ROOT file
-                output_file["test"] = out_data_dict
-            else:
-                print("No data to write to ROOT file.")
-            #output_file['test'] = out_data_dict
+                out_data = pd.concat([out_data, data_o], ignore_index=True, sort=False)
+
+            out_data.to_root(output_path, key='test', mode='a', index=False)
+
             del out_data, data_s, data_o
-
 
 def main():
 
@@ -322,9 +283,7 @@ def main():
     xgb.loadModels()
     xgb.loadTransformer()
 
-    #with open('data/inputs_config_22EE_herwig.json') as f:
-    #with open('data/inputs_config_22EE_v2.json') as f:
-    with open('data/inputs_config_2223_.json') as f:
+    with open('data/inputs_config.json') as f:
         config = json.load(f)
     sample_list = config['sample_list']
 
