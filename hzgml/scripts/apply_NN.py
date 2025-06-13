@@ -76,6 +76,7 @@ class ApplyXGBHandler(object):
         self._region = region
         self._inputFolder = ''
         self._inputTree = region if region else 'inclusive'
+        self._inputTree = 'two_jet_m110To150_v2'
         self._inputTree = 'two_jet_m110To150'
         self._modelFolder = ''
         self._outputFolder = ''
@@ -244,14 +245,17 @@ class ApplyXGBHandler(object):
         #self.scaler_l = joblib.load('/eos/user/q/qguo/SWAN_projects/ML_test/saved_modela_0616_v2/scaler_0624.pkl')
         #self.scaler_l = joblib.load('/eos/user/q/qguo/SWAN_projects/ML_test/saved_modela_0729_v2/scaler_0729.pkl')# no jet1_gql and jet2_gql
         ## train with 2223 without jet1_gql and jet2_gql
-        self.scaler_l = joblib.load('/eos/user/q/qguo/SWAN_projects/ML_test/saved_model_run3_20250331_v1/scaler_20250401.pkl')# no jet1_gql and jet2_gql
+        #self.scaler_l = joblib.load('/eos/user/q/qguo/SWAN_projects/ML_test/saved_model_run3_20250331_v1/scaler_20250401.pkl')# no jet1_gql and jet2_gql
+        #self.scaler_l = joblib.load('/eos/user/q/qguo/SWAN_projects/ML_test/saved_model_run3_20250414_v1/scaler_20250401.pkl')# no jet1_gql and jet2_gql
+        #o  = load_model('%s/merged_model_fold_%d.h5'%(self._modelFolder, i))
+        self.scaler_l = joblib.load('%s/scaler_new.pkl'%(self._modelFolder))
 
     def applyBDT(self, category, scale=1):
         outputbraches = copy.deepcopy(self._outbranches)
         branches = copy.deepcopy(self._branches)
         # branches += ["Z_sublead_lepton_pt", "gamma_mvaID_WP80", "gamma_mvaID_WPL"]
-        branches += ["eventWeight", "trg_single_mu24", "nmuons"]
-        outputbraches += ["eventWeight", "trg_single_mu24", "nmuons"]
+        branches += ["eventWeight", "trg_single_mu24", "nmuons", "source_year"]
+        outputbraches += ["eventWeight", "trg_single_mu24", "nmuons", "source_year"]
         #data_s = None
         #data_o = None
 
@@ -356,7 +360,8 @@ def main():
     #with open('data/inputs_config.json') as f:
     #with open('data/inputs_config_22EE_herwig.json') as f:
     #with open('data/inputs_config_22EE.json') as f:
-    with open('data/inputs_config_2223.json') as f:
+    #with open('data/inputs_config_2223.json') as f:
+    with open('data/inputs_config_2223_dy.json') as f:
         config = json.load(f)
     sample_list = config['sample_list']
 
