@@ -294,7 +294,7 @@ class XGBoostHandler(object):
         #TODO put this to the config
         for filename in tqdm(sorted(sig_list), desc='XGB INFO: Loading training signals', bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}'):
             file = uproot.open(filename)
-            print(filename)
+            print(filename, self.inputTree)
             for data in file[self.inputTree].iterate(self._sig_branches, library='pd', step_size=self._chunksize):
                 data = self.preselect(data, 'signal')
                 self.m_data_sig = self.m_data_sig.append(data, ignore_index=True)
@@ -785,14 +785,10 @@ def main():
         #    xgb_model.plotFeaturesImportance(i)
         #if args.roc:
         #    xgb_model.plotROC(i)
-        print("AAA8")
         xgb_model.plotFeaturesImportance(i)
-        print("AAA9")
         xgb_model.plotROC(i)
-        print("AAA10")
 
         xgb_model.transformScore(i)
-        print("AAA11")
 
 
         if args.save: xgb_model.save(i)

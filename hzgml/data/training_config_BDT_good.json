@@ -72,7 +72,7 @@
  "two_jet":  {"+train_signal": [],
               "train_mc_background": ["DY_105To160","EWK_LLJJ_M105To160","TTTo2L2Nu","TTToSemiLep","DY_105To160_VBFFilter"],
               "+preselections": [],
-              "inputTree": "two_jet",
+              "inputTree": "two_jet_m110To150",
               "train_variables": [
                   "diMufsr_rc_mass", "diMufsr_rc_pt", "diMufsr_rc_eta", "log_diMufsr_rc_pt", 
                   "z_star", "R_pT",

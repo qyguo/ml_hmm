@@ -59,9 +59,10 @@ class ApplyXGBHandler(object):
 
         self._region = region
         self._inputFolder = ''
-        self._inputTree = region if region else 'inclusive'
-        self._inputTree = 'two_jet_m110To150'
-        print("inputTree: ", self._inputTree)
+        self._inputTree = ''
+        #self._inputTree = region if region else 'inclusive'
+        #self._inputTree = 'two_jet_m110To150'
+        #print("inputTree: ", self._inputTree)
         #self._inputTree = 'two_jet'
         self._modelFolder = ''
         self._outputFolder = ''
@@ -126,6 +127,7 @@ class ApplyXGBHandler(object):
             config = configs["common"]
 
             if 'randomIndex' in config.keys(): self.randomIndex = config['randomIndex']
+            if 'inputTree' in config.keys(): self._inputTree = config['inputTree']
  
             if self.models:
                 for model in self.models:
@@ -148,6 +150,28 @@ class ApplyXGBHandler(object):
                         print(self.train_variables[model])
                         print(len(self.train_variables[model]))
                         print("\n\n")
+            
+            if self._region:
+                config = configs[self._region]
+                if 'inputTree' in config.keys(): self._inputTree = config['inputTree']
+                if self._add >= 0:
+                    config["+train_variables"].append(config["test_variables"][self._add])
+                #for member in config.keys():
+                #    if member in member_variables:
+                #        setattr(self, member, config[member])
+                #if '+train_mc_background' in config.keys():
+                #    self.train_mc_background += config['+train_mc_background']
+                #if '+train_signal' in config.keys():
+                #    self.train_signal += config['+train_signal']
+                if '+train_variables' in config.keys():
+                    self.train_variables += config['+train_variables']
+                #if '+preselections' in config.keys():
+                #    self.preselections += config['+preselections']
+                #if '+signal_preselections' in config.keys():
+                #    self.signal_preselections += config['+signal_preselections']
+                #if '+background_preselections' in config.keys():
+                #    self.background_preselections += config['+background_preselections']
+
 
         except Exception as e:
             logging.error("Error reading training configuration '{config}'".format(config=configPath))
@@ -255,6 +279,7 @@ class ApplyXGBHandler(object):
             out_data = pd.DataFrame()
             for filename in tqdm(sorted(f_list), desc='XGB INFO: Applying BDTs to %s samples' % category, bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}'):
                 file = uproot.open(filename)
+                print(filename, self._inputTree)
                 for data in file[self._inputTree].iterate(branches, library='pd', step_size=self._chunksize):
                     data = self.preselect(data)
                     # data = data[data.Z_sublead_lepton_pt >= 15]
@@ -322,9 +347,7 @@ def main():
     xgb.loadModels()
     xgb.loadTransformer()
 
-    #with open('data/inputs_config_22EE_herwig.json') as f:
-    #with open('data/inputs_config_22EE_v2.json') as f:
-    with open('data/inputs_config_2223_.json') as f:
+    with open('data/inputs_config.json') as f:
         config = json.load(f)
     sample_list = config['sample_list']
 
