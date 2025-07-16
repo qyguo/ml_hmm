@@ -11,6 +11,8 @@ from sklearn.preprocessing import StandardScaler, QuantileTransformer
 import xgboost as xgb
 from tabulate import tabulate
 #from bayes_opt import BayesianOptimization
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 #import logging
@@ -450,6 +452,7 @@ class XGBoostHandler(object):
         # get scores
         print('XGB INFO: Computing scores for different sample sets...')
         self.m_score_val[fold]   = self.m_bst[fold].predict(self.m_dVal[fold])
+        self.m_score_val[fold]   = self.m_bst[fold].predict(self.m_dVal[fold])
         self.m_score_test[fold]  = self.m_bst[fold].predict(self.m_dTest[fold])
         self.m_score_train[fold] = self.m_bst[fold].predict(self.m_dTrain[fold])
         self.m_score_test_sig[fold]  = self.m_bst[fold].predict(self.m_dTest_sig[fold])
@@ -473,10 +476,11 @@ class XGBoostHandler(object):
             plt.title('Score distribution test background')
             plt.show()
 
-    def plotFeaturesImportance(self, fold=0, save=True, show=True, type='gain'):
+    def plotFeaturesImportance(self, fold=0, save=True, show=False, type='gain'):
         """Plot feature importance. Type can be 'weight', 'gain' or 'cover'"""
 
-        xgb.plot_importance(booster=self.m_bst[fold], importance_type=type, show_values=show, values_format='{v:.2f}')
+        #xgb.plot_importance(booster=self.m_bst[fold], importance_type=type, show_values=show, values_format='{v:.2f}')
+        xgb.plot_importance(booster=self.m_bst[fold], importance_type=type, show_values=show)
         plt.tight_layout()
 
         if save:
@@ -781,10 +785,15 @@ def main():
         #    xgb_model.plotFeaturesImportance(i)
         #if args.roc:
         #    xgb_model.plotROC(i)
+        print("AAA8")
         xgb_model.plotFeaturesImportance(i)
+        print("AAA9")
         xgb_model.plotROC(i)
+        print("AAA10")
 
         xgb_model.transformScore(i)
+        print("AAA11")
+
 
         if args.save: xgb_model.save(i)
     
