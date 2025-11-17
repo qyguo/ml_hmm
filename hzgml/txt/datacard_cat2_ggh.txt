@@ -1,0 +1,21 @@
+imax *
+jmax *
+kmax *
+------------
+shapes ggH_hmm     cat2_ggh           workspace_sig_cat2_ggh.root     w:ggH_cat2_ggh_pdf
+shapes qqH_hmm     cat2_ggh           workspace_sig_cat2_ggh.root     w:qqH_cat2_ggh_pdf
+shapes bkg         cat2_ggh           workspace_bkg_cat2_ggh.root     w:bkg_cat2_ggh_pdf
+shapes data_obs    cat2_ggh           workspace_bkg_cat2_ggh.root     w:data_cat2_ggh
+------------
+bin                cat2_ggh
+observation        -1
+------------
+bin                cat2_ggh     cat2_ggh     cat2_ggh
+process            ggH_hmm      qqH_hmm      bkg
+process            -2           -1           1
+rate               1            1            1
+------------
+CMS_hmm_peak_cat2_ggh   param  0  0.001
+CMS_hmm_sigma_cat2_ggh  param  0  0.1
+------------
+#pdf_index_ggh    discrete

@@ -1,0 +1,292 @@
+variables
+---------
+(CMS_channel,CMS_hmm_peak_cat0_ggh,CMS_hmm_peak_cat0_ggh_In,CMS_hmm_peak_cat1_ggh,CMS_hmm_peak_cat1_ggh_In,CMS_hmm_peak_cat2_ggh,CMS_hmm_peak_cat2_ggh_In,CMS_hmm_peak_cat3_ggh,CMS_hmm_peak_cat3_ggh_In,CMS_hmm_peak_cat4_ggh,CMS_hmm_peak_cat4_ggh_In,CMS_hmm_sigma_cat0_ggh,CMS_hmm_sigma_cat0_ggh_In,CMS_hmm_sigma_cat1_ggh,CMS_hmm_sigma_cat1_ggh_In,CMS_hmm_sigma_cat2_ggh,CMS_hmm_sigma_cat2_ggh_In,CMS_hmm_sigma_cat3_ggh,CMS_hmm_sigma_cat3_ggh_In,CMS_hmm_sigma_cat4_ggh,CMS_hmm_sigma_cat4_ggh_In,MH,bwzr_cat_ggh_coef1,bwzr_cat_ggh_coef2,bwzr_cat_ggh_coef3,bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat0_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat1_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat2_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat3_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat4_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat0_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat1_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat2_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat3_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat4_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat0_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat1_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat2_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat3_ggh,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat4_ggh,exp_cat_ggh_pdf_transfer_order3_coef_1_cat0_ggh,exp_cat_ggh_pdf_transfer_order3_coef_1_cat1_ggh,exp_cat_ggh_pdf_transfer_order3_coef_1_cat2_ggh,exp_cat_ggh_pdf_transfer_order3_coef_1_cat3_ggh,exp_cat_ggh_pdf_transfer_order3_coef_1_cat4_ggh,exp_cat_ggh_pdf_transfer_order3_coef_2_cat0_ggh,exp_cat_ggh_pdf_transfer_order3_coef_2_cat1_ggh,exp_cat_ggh_pdf_transfer_order3_coef_2_cat2_ggh,exp_cat_ggh_pdf_transfer_order3_coef_2_cat3_ggh,exp_cat_ggh_pdf_transfer_order3_coef_2_cat4_ggh,exp_cat_ggh_pdf_transfer_order3_coef_3_cat0_ggh,exp_cat_ggh_pdf_transfer_order3_coef_3_cat1_ggh,exp_cat_ggh_pdf_transfer_order3_coef_3_cat2_ggh,exp_cat_ggh_pdf_transfer_order3_coef_3_cat3_ggh,exp_cat_ggh_pdf_transfer_order3_coef_3_cat4_ggh,exp_order2_cat_ggh_coef1,exp_order2_cat_ggh_coef2,exp_order2_cat_ggh_frac1,fewz_1j_spl_order3_bern_cat_ggh_coef1,fewz_1j_spl_order3_bern_cat_ggh_coef2,fewz_1j_spl_order3_bern_cat_ggh_coef3,mh_ggh,n_exp_binch1_proc_bkg,n_exp_binch2_proc_bkg,n_exp_binch3_proc_bkg,n_exp_binch4_proc_bkg,n_exp_binch5_proc_bkg,pdf_index_ggh,r,shapeBkg_bkg_ch1__norm,shapeBkg_bkg_ch2__norm,shapeBkg_bkg_ch3__norm,shapeBkg_bkg_ch4__norm,shapeBkg_bkg_ch5__norm)
+
+p.d.f.s
+-------
+SimpleGaussianConstraint::CMS_hmm_peak_cat0_ggh_Pdf[ x=CMS_hmm_peak_cat0_ggh mean=CMS_hmm_peak_cat0_ggh_In sigma=0.001 ] = 1
+SimpleGaussianConstraint::CMS_hmm_peak_cat1_ggh_Pdf[ x=CMS_hmm_peak_cat1_ggh mean=CMS_hmm_peak_cat1_ggh_In sigma=0.001 ] = 1
+SimpleGaussianConstraint::CMS_hmm_peak_cat2_ggh_Pdf[ x=CMS_hmm_peak_cat2_ggh mean=CMS_hmm_peak_cat2_ggh_In sigma=0.001 ] = 1
+SimpleGaussianConstraint::CMS_hmm_peak_cat3_ggh_Pdf[ x=CMS_hmm_peak_cat3_ggh mean=CMS_hmm_peak_cat3_ggh_In sigma=0.001 ] = 1
+SimpleGaussianConstraint::CMS_hmm_peak_cat4_ggh_Pdf[ x=CMS_hmm_peak_cat4_ggh mean=CMS_hmm_peak_cat4_ggh_In sigma=0.001 ] = 1
+SimpleGaussianConstraint::CMS_hmm_sigma_cat0_ggh_Pdf[ x=CMS_hmm_sigma_cat0_ggh mean=CMS_hmm_sigma_cat0_ggh_In sigma=0.1 ] = 1
+SimpleGaussianConstraint::CMS_hmm_sigma_cat1_ggh_Pdf[ x=CMS_hmm_sigma_cat1_ggh mean=CMS_hmm_sigma_cat1_ggh_In sigma=0.1 ] = 1
+SimpleGaussianConstraint::CMS_hmm_sigma_cat2_ggh_Pdf[ x=CMS_hmm_sigma_cat2_ggh mean=CMS_hmm_sigma_cat2_ggh_In sigma=0.1 ] = 1
+SimpleGaussianConstraint::CMS_hmm_sigma_cat3_ggh_Pdf[ x=CMS_hmm_sigma_cat3_ggh mean=CMS_hmm_sigma_cat3_ggh_In sigma=0.1 ] = 1
+SimpleGaussianConstraint::CMS_hmm_sigma_cat4_ggh_Pdf[ x=CMS_hmm_sigma_cat4_ggh mean=CMS_hmm_sigma_cat4_ggh_In sigma=0.1 ] = 1
+RooProdPdf::bkg_bwzr_cat0_ggh_pdf[ bwzr_cat_ggh_pdf * bwzr_cat_ggh_pdf_transfer_order3_cat0_ggh_pdf ] = 1.16281e-08
+RooProdPdf::bkg_bwzr_cat1_ggh_pdf[ bwzr_cat_ggh_pdf_ch2 * bwzr_cat_ggh_pdf_transfer_order3_cat1_ggh_pdf ] = 1.16722e-08
+RooProdPdf::bkg_bwzr_cat2_ggh_pdf[ bwzr_cat_ggh_pdf_ch3 * bwzr_cat_ggh_pdf_transfer_order3_cat2_ggh_pdf ] = 1.09051e-08
+RooProdPdf::bkg_bwzr_cat3_ggh_pdf[ bwzr_cat_ggh_pdf_ch4 * bwzr_cat_ggh_pdf_transfer_order3_cat3_ggh_pdf ] = 1.66182e-08
+RooProdPdf::bkg_bwzr_cat4_ggh_pdf[ bwzr_cat_ggh_pdf_ch5 * bwzr_cat_ggh_pdf_transfer_order3_cat4_ggh_pdf ] = 2.74028e-08
+RooProdPdf::bkg_exp_cat0_ggh_pdf[ exp_cat_ggh_pdf * exp_cat_ggh_pdf_transfer_order3_cat0_ggh_pdf ] = 0.00660732
+RooProdPdf::bkg_exp_cat1_ggh_pdf[ exp_cat_ggh_pdf_ch2 * exp_cat_ggh_pdf_transfer_order3_cat1_ggh_pdf ] = 0.00654384
+RooProdPdf::bkg_exp_cat2_ggh_pdf[ exp_cat_ggh_pdf_ch3 * exp_cat_ggh_pdf_transfer_order3_cat2_ggh_pdf ] = 0.0048188
+RooProdPdf::bkg_exp_cat3_ggh_pdf[ exp_cat_ggh_pdf_ch4 * exp_cat_ggh_pdf_transfer_order3_cat3_ggh_pdf ] = 0.00867784
+RooProdPdf::bkg_exp_cat4_ggh_pdf[ exp_cat_ggh_pdf_ch5 * exp_cat_ggh_pdf_transfer_order3_cat4_ggh_pdf ] = 0.00696714
+RooProdPdf::bkg_fewz_1j_spl_cat0_ggh_pdf[ fewz_1j_spl_pdf * fewz_1j_spl_order3_bern_cat_ggh_pdf ] = 0.00196176
+RooProdPdf::bkg_fewz_1j_spl_cat1_ggh_pdf[ fewz_1j_spl_pdf_ch2 * fewz_1j_spl_order3_bern_cat_ggh_pdf_ch2 ] = 0.00196176
+RooProdPdf::bkg_fewz_1j_spl_cat2_ggh_pdf[ fewz_1j_spl_pdf_ch3 * fewz_1j_spl_order3_bern_cat_ggh_pdf_ch3 ] = 0.00196176
+RooProdPdf::bkg_fewz_1j_spl_cat3_ggh_pdf[ fewz_1j_spl_pdf_ch4 * fewz_1j_spl_order3_bern_cat_ggh_pdf_ch4 ] = 0.00196176
+RooProdPdf::bkg_fewz_1j_spl_cat4_ggh_pdf[ fewz_1j_spl_pdf_ch5 * fewz_1j_spl_order3_bern_cat_ggh_pdf_ch5 ] = 0.00196176
+RooModZPdf::bwzr_cat_ggh_pdf[ x=mh_ggh a=bwzr_cat_ggh_coef1 b=bwzr_cat_ggh_coef2 c=bwzr_cat_ggh_coef3 m=nullptr w=nullptr coefficients=() ] = 1.15879e-08
+RooModZPdf::bwzr_cat_ggh_pdf_ch2[ x=mh_ggh a=bwzr_cat_ggh_coef1 b=bwzr_cat_ggh_coef2 c=bwzr_cat_ggh_coef3 m=nullptr w=nullptr coefficients=() ] = 1.15879e-08
+RooModZPdf::bwzr_cat_ggh_pdf_ch3[ x=mh_ggh a=bwzr_cat_ggh_coef1 b=bwzr_cat_ggh_coef2 c=bwzr_cat_ggh_coef3 m=nullptr w=nullptr coefficients=() ] = 1.15879e-08
+RooModZPdf::bwzr_cat_ggh_pdf_ch4[ x=mh_ggh a=bwzr_cat_ggh_coef1 b=bwzr_cat_ggh_coef2 c=bwzr_cat_ggh_coef3 m=nullptr w=nullptr coefficients=() ] = 1.15879e-08
+RooModZPdf::bwzr_cat_ggh_pdf_ch5[ x=mh_ggh a=bwzr_cat_ggh_coef1 b=bwzr_cat_ggh_coef2 c=bwzr_cat_ggh_coef3 m=nullptr w=nullptr coefficients=() ] = 1.15879e-08
+RooChebychev::bwzr_cat_ggh_pdf_transfer_order3_cat0_ggh_pdf[ x=mh_ggh coefList=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat0_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat0_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat0_ggh_sq) ] = 1.00347
+RooChebychev::bwzr_cat_ggh_pdf_transfer_order3_cat1_ggh_pdf[ x=mh_ggh coefList=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat1_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat1_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat1_ggh_sq) ] = 1.00727
+RooChebychev::bwzr_cat_ggh_pdf_transfer_order3_cat2_ggh_pdf[ x=mh_ggh coefList=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat2_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat2_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat2_ggh_sq) ] = 0.941076
+RooChebychev::bwzr_cat_ggh_pdf_transfer_order3_cat3_ggh_pdf[ x=mh_ggh coefList=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat3_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat3_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat3_ggh_sq) ] = 1.4341
+RooChebychev::bwzr_cat_ggh_pdf_transfer_order3_cat4_ggh_pdf[ x=mh_ggh coefList=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat4_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat4_ggh_sq,bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat4_ggh_sq) ] = 2.36477
+RooSumTwoExpPdf::exp_cat_ggh_pdf[ x=mh_ggh a1=exp_order2_cat_ggh_coef1 a2=exp_order2_cat_ggh_coef2 f=exp_order2_cat_ggh_frac1 m=nullptr ] = 0.00626888
+RooSumTwoExpPdf::exp_cat_ggh_pdf_ch2[ x=mh_ggh a1=exp_order2_cat_ggh_coef1 a2=exp_order2_cat_ggh_coef2 f=exp_order2_cat_ggh_frac1 m=nullptr ] = 0.00626888
+RooSumTwoExpPdf::exp_cat_ggh_pdf_ch3[ x=mh_ggh a1=exp_order2_cat_ggh_coef1 a2=exp_order2_cat_ggh_coef2 f=exp_order2_cat_ggh_frac1 m=nullptr ] = 0.00626888
+RooSumTwoExpPdf::exp_cat_ggh_pdf_ch4[ x=mh_ggh a1=exp_order2_cat_ggh_coef1 a2=exp_order2_cat_ggh_coef2 f=exp_order2_cat_ggh_frac1 m=nullptr ] = 0.00626888
+RooSumTwoExpPdf::exp_cat_ggh_pdf_ch5[ x=mh_ggh a1=exp_order2_cat_ggh_coef1 a2=exp_order2_cat_ggh_coef2 f=exp_order2_cat_ggh_frac1 m=nullptr ] = 0.00626888
+RooChebychev::exp_cat_ggh_pdf_transfer_order3_cat0_ggh_pdf[ x=mh_ggh coefList=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat0_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_2_cat0_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_3_cat0_ggh_sq) ] = 1.05399
+RooChebychev::exp_cat_ggh_pdf_transfer_order3_cat1_ggh_pdf[ x=mh_ggh coefList=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat1_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_2_cat1_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_3_cat1_ggh_sq) ] = 1.04386
+RooChebychev::exp_cat_ggh_pdf_transfer_order3_cat2_ggh_pdf[ x=mh_ggh coefList=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat2_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_2_cat2_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_3_cat2_ggh_sq) ] = 0.768686
+RooChebychev::exp_cat_ggh_pdf_transfer_order3_cat3_ggh_pdf[ x=mh_ggh coefList=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat3_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_2_cat3_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_3_cat3_ggh_sq) ] = 1.38427
+RooChebychev::exp_cat_ggh_pdf_transfer_order3_cat4_ggh_pdf[ x=mh_ggh coefList=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat4_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_2_cat4_ggh_sq,exp_cat_ggh_pdf_transfer_order3_coef_3_cat4_ggh_sq) ] = 1.11139
+RooBernsteinFast<3>::fewz_1j_spl_order3_bern_cat_ggh_pdf[ x=mh_ggh coefList=(fewz_1j_spl_order3_bern_cat_ggh_coef1,fewz_1j_spl_order3_bern_cat_ggh_coef2,fewz_1j_spl_order3_bern_cat_ggh_coef3) ] = 0.0392451
+RooBernsteinFast<3>::fewz_1j_spl_order3_bern_cat_ggh_pdf_ch2[ x=mh_ggh coefList=(fewz_1j_spl_order3_bern_cat_ggh_coef1,fewz_1j_spl_order3_bern_cat_ggh_coef2,fewz_1j_spl_order3_bern_cat_ggh_coef3) ] = 0.0392451
+RooBernsteinFast<3>::fewz_1j_spl_order3_bern_cat_ggh_pdf_ch3[ x=mh_ggh coefList=(fewz_1j_spl_order3_bern_cat_ggh_coef1,fewz_1j_spl_order3_bern_cat_ggh_coef2,fewz_1j_spl_order3_bern_cat_ggh_coef3) ] = 0.0392451
+RooBernsteinFast<3>::fewz_1j_spl_order3_bern_cat_ggh_pdf_ch4[ x=mh_ggh coefList=(fewz_1j_spl_order3_bern_cat_ggh_coef1,fewz_1j_spl_order3_bern_cat_ggh_coef2,fewz_1j_spl_order3_bern_cat_ggh_coef3) ] = 0.0392451
+RooBernsteinFast<3>::fewz_1j_spl_order3_bern_cat_ggh_pdf_ch5[ x=mh_ggh coefList=(fewz_1j_spl_order3_bern_cat_ggh_coef1,fewz_1j_spl_order3_bern_cat_ggh_coef2,fewz_1j_spl_order3_bern_cat_ggh_coef3) ] = 0.0392451
+RooGenericPdf::fewz_1j_spl_pdf[ actualVars=(fewz_1j_spl_order1_cat_ggh) formula="x[0]" ] = 0.0499875
+RooGenericPdf::fewz_1j_spl_pdf_ch2[ actualVars=(fewz_1j_spl_order1_cat_ggh_ch2) formula="x[0]" ] = 0.0499875
+RooGenericPdf::fewz_1j_spl_pdf_ch3[ actualVars=(fewz_1j_spl_order1_cat_ggh_ch3) formula="x[0]" ] = 0.0499875
+RooGenericPdf::fewz_1j_spl_pdf_ch4[ actualVars=(fewz_1j_spl_order1_cat_ggh_ch4) formula="x[0]" ] = 0.0499875
+RooGenericPdf::fewz_1j_spl_pdf_ch5[ actualVars=(fewz_1j_spl_order1_cat_ggh_ch5) formula="x[0]" ] = 0.0499875
+RooSimultaneousOpt::model_b[ indexCat=CMS_channel ch1=pdf_binch1_bonly ch2=pdf_binch2_bonly ch3=pdf_binch3_bonly ch4=pdf_binch4_bonly ch5=pdf_binch5_bonly extraConstraints=() channelMasks=() ] = 1.84275e-06
+RooSimultaneousOpt::model_s[ indexCat=CMS_channel ch1=pdf_binch1 ch2=pdf_binch2 ch3=pdf_binch3 ch4=pdf_binch4 ch5=pdf_binch5 extraConstraints=() channelMasks=() ] = 1.84184e-06
+RooProdPdf::nuisancePdf[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf ] = 1
+RooProdPdf::pdf_binch1[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch1_nuis * pdfbins_binch1 ] = 0.00660556
+RooProdPdf::pdf_binch1_bonly[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch1_bonly_nuis * pdfbins_binch1 ] = 0.00660732
+RooAddPdf::pdf_binch1_bonly_nuis[ n_exp_final_binch1_proc_bkg * shapeBkg_bkg_ch1 ] = 0.00660732/1
+RooAddPdf::pdf_binch1_nuis[ n_exp_final_binch1_proc_ggH_hmm * shapeSig_ggH_hmm_ch1 + n_exp_final_binch1_proc_qqH_hmm * shapeSig_qqH_hmm_ch1 + n_exp_final_binch1_proc_bkg * shapeBkg_bkg_ch1 ] = 0.00660556/1
+RooProdPdf::pdf_binch2[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch2_nuis * pdfbins_binch2 ] = 0.0065399
+RooProdPdf::pdf_binch2_bonly[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch2_bonly_nuis * pdfbins_binch2 ] = 0.00654384
+RooAddPdf::pdf_binch2_bonly_nuis[ n_exp_final_binch2_proc_bkg * shapeBkg_bkg_ch2 ] = 0.00654384/1
+RooAddPdf::pdf_binch2_nuis[ n_exp_final_binch2_proc_ggH_hmm * shapeSig_ggH_hmm_ch2 + n_exp_final_binch2_proc_qqH_hmm * shapeSig_qqH_hmm_ch2 + n_exp_final_binch2_proc_bkg * shapeBkg_bkg_ch2 ] = 0.0065399/1
+RooProdPdf::pdf_binch3[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch3_nuis * pdfbins_binch3 ] = 0.00481387
+RooProdPdf::pdf_binch3_bonly[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch3_bonly_nuis * pdfbins_binch3 ] = 0.0048188
+RooAddPdf::pdf_binch3_bonly_nuis[ n_exp_final_binch3_proc_bkg * shapeBkg_bkg_ch3 ] = 0.0048188/1
+RooAddPdf::pdf_binch3_nuis[ n_exp_final_binch3_proc_ggH_hmm * shapeSig_ggH_hmm_ch3 + n_exp_final_binch3_proc_qqH_hmm * shapeSig_qqH_hmm_ch3 + n_exp_final_binch3_proc_bkg * shapeBkg_bkg_ch3 ] = 0.00481387/1
+RooProdPdf::pdf_binch4[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch4_nuis * pdfbins_binch4 ] = 0.00865325
+RooProdPdf::pdf_binch4_bonly[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch4_bonly_nuis * pdfbins_binch4 ] = 0.00867784
+RooAddPdf::pdf_binch4_bonly_nuis[ n_exp_final_binch4_proc_bkg * shapeBkg_bkg_ch4 ] = 0.00867784/1
+RooAddPdf::pdf_binch4_nuis[ n_exp_final_binch4_proc_ggH_hmm * shapeSig_ggH_hmm_ch4 + n_exp_final_binch4_proc_qqH_hmm * shapeSig_qqH_hmm_ch4 + n_exp_final_binch4_proc_bkg * shapeBkg_bkg_ch4 ] = 0.00865325/1
+RooProdPdf::pdf_binch5[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch5_nuis * pdfbins_binch5 ] = 0.00692693
+RooProdPdf::pdf_binch5_bonly[ CMS_hmm_peak_cat0_ggh_Pdf * CMS_hmm_sigma_cat0_ggh_Pdf * CMS_hmm_peak_cat1_ggh_Pdf * CMS_hmm_sigma_cat1_ggh_Pdf * CMS_hmm_peak_cat2_ggh_Pdf * CMS_hmm_sigma_cat2_ggh_Pdf * CMS_hmm_peak_cat3_ggh_Pdf * CMS_hmm_sigma_cat3_ggh_Pdf * CMS_hmm_peak_cat4_ggh_Pdf * CMS_hmm_sigma_cat4_ggh_Pdf * pdf_binch5_bonly_nuis * pdfbins_binch5 ] = 0.00696714
+RooAddPdf::pdf_binch5_bonly_nuis[ n_exp_final_binch5_proc_bkg * shapeBkg_bkg_ch5 ] = 0.00696714/1
+RooAddPdf::pdf_binch5_nuis[ n_exp_final_binch5_proc_ggH_hmm * shapeSig_ggH_hmm_ch5 + n_exp_final_binch5_proc_qqH_hmm * shapeSig_qqH_hmm_ch5 + n_exp_final_binch5_proc_bkg * shapeBkg_bkg_ch5 ] = 0.00692693/1
+RooProdPdf::pdfbins_binch1[  ] = 1
+RooProdPdf::pdfbins_binch2[  ] = 1
+RooProdPdf::pdfbins_binch3[  ] = 1
+RooProdPdf::pdfbins_binch4[  ] = 1
+RooProdPdf::pdfbins_binch5[  ] = 1
+RooMultiPdf::shapeBkg_bkg_ch1[ _pdfs=(bkg_bwzr_cat0_ggh_pdf,bkg_exp_cat0_ggh_pdf,bkg_fewz_1j_spl_cat0_ggh_pdf) _corrs=(constbkg_bwzr_cat0_ggh_pdf,constbkg_exp_cat0_ggh_pdf,constbkg_fewz_1j_spl_cat0_ggh_pdf) _index=pdf_index_ggh ] = 0.00660732
+RooMultiPdf::shapeBkg_bkg_ch2[ _pdfs=(bkg_bwzr_cat1_ggh_pdf,bkg_exp_cat1_ggh_pdf,bkg_fewz_1j_spl_cat1_ggh_pdf) _corrs=(constbkg_bwzr_cat1_ggh_pdf,constbkg_exp_cat1_ggh_pdf,constbkg_fewz_1j_spl_cat1_ggh_pdf) _index=pdf_index_ggh ] = 0.00654384
+RooMultiPdf::shapeBkg_bkg_ch3[ _pdfs=(bkg_bwzr_cat2_ggh_pdf,bkg_exp_cat2_ggh_pdf,bkg_fewz_1j_spl_cat2_ggh_pdf) _corrs=(constbkg_bwzr_cat2_ggh_pdf,constbkg_exp_cat2_ggh_pdf,constbkg_fewz_1j_spl_cat2_ggh_pdf) _index=pdf_index_ggh ] = 0.0048188
+RooMultiPdf::shapeBkg_bkg_ch4[ _pdfs=(bkg_bwzr_cat3_ggh_pdf,bkg_exp_cat3_ggh_pdf,bkg_fewz_1j_spl_cat3_ggh_pdf) _corrs=(constbkg_bwzr_cat3_ggh_pdf,constbkg_exp_cat3_ggh_pdf,constbkg_fewz_1j_spl_cat3_ggh_pdf) _index=pdf_index_ggh ] = 0.00867784
+RooMultiPdf::shapeBkg_bkg_ch5[ _pdfs=(bkg_bwzr_cat4_ggh_pdf,bkg_exp_cat4_ggh_pdf,bkg_fewz_1j_spl_cat4_ggh_pdf) _corrs=(constbkg_bwzr_cat4_ggh_pdf,constbkg_exp_cat4_ggh_pdf,constbkg_fewz_1j_spl_cat4_ggh_pdf) _index=pdf_index_ggh ] = 0.00696714
+RooDoubleCBFast::shapeSig_ggH_hmm_ch1[ x=mh_ggh mean=ggH_cat0_ggh_fpeak width=ggH_cat0_ggh_fsigma alpha1=ggH_cat0_ggh_spline_aL n1=ggH_cat0_ggh_spline_nL alpha2=ggH_cat0_ggh_spline_aR n2=ggH_cat0_ggh_spline_nR ] = 6.83903e-05
+RooDoubleCBFast::shapeSig_ggH_hmm_ch2[ x=mh_ggh mean=ggH_cat1_ggh_fpeak width=ggH_cat1_ggh_fsigma alpha1=ggH_cat1_ggh_spline_aL n1=ggH_cat1_ggh_spline_nL alpha2=ggH_cat1_ggh_spline_aR n2=ggH_cat1_ggh_spline_nR ] = 6.72757e-05
+RooDoubleCBFast::shapeSig_ggH_hmm_ch3[ x=mh_ggh mean=ggH_cat2_ggh_fpeak width=ggH_cat2_ggh_fsigma alpha1=ggH_cat2_ggh_spline_aL n1=ggH_cat2_ggh_spline_nL alpha2=ggH_cat2_ggh_spline_aR n2=ggH_cat2_ggh_spline_nR ] = 5.35801e-05
+RooDoubleCBFast::shapeSig_ggH_hmm_ch4[ x=mh_ggh mean=ggH_cat3_ggh_fpeak width=ggH_cat3_ggh_fsigma alpha1=ggH_cat3_ggh_spline_aL n1=ggH_cat3_ggh_spline_nL alpha2=ggH_cat3_ggh_spline_aR n2=ggH_cat3_ggh_spline_nR ] = 0.00014848
+RooDoubleCBFast::shapeSig_ggH_hmm_ch5[ x=mh_ggh mean=ggH_cat4_ggh_fpeak width=ggH_cat4_ggh_fsigma alpha1=ggH_cat4_ggh_spline_aL n1=ggH_cat4_ggh_spline_nL alpha2=ggH_cat4_ggh_spline_aR n2=ggH_cat4_ggh_spline_nR ] = 0.000153949
+RooDoubleCBFast::shapeSig_qqH_hmm_ch1[ x=mh_ggh mean=qqH_cat0_ggh_fpeak width=qqH_cat0_ggh_fsigma alpha1=qqH_cat0_ggh_spline_aL n1=qqH_cat0_ggh_spline_nL alpha2=qqH_cat0_ggh_spline_aR n2=qqH_cat0_ggh_spline_nR ] = 9.46049e-05
+RooDoubleCBFast::shapeSig_qqH_hmm_ch2[ x=mh_ggh mean=qqH_cat1_ggh_fpeak width=qqH_cat1_ggh_fsigma alpha1=qqH_cat1_ggh_spline_aL n1=qqH_cat1_ggh_spline_nL alpha2=qqH_cat1_ggh_spline_aR n2=qqH_cat1_ggh_spline_nR ] = 9.33506e-05
+RooDoubleCBFast::shapeSig_qqH_hmm_ch3[ x=mh_ggh mean=qqH_cat2_ggh_fpeak width=qqH_cat2_ggh_fsigma alpha1=qqH_cat2_ggh_spline_aL n1=qqH_cat2_ggh_spline_nL alpha2=qqH_cat2_ggh_spline_aR n2=qqH_cat2_ggh_spline_nR ] = 7.83092e-05
+RooDoubleCBFast::shapeSig_qqH_hmm_ch4[ x=mh_ggh mean=qqH_cat3_ggh_fpeak width=qqH_cat3_ggh_fsigma alpha1=qqH_cat3_ggh_spline_aL n1=qqH_cat3_ggh_spline_nL alpha2=qqH_cat3_ggh_spline_aR n2=qqH_cat3_ggh_spline_nR ] = 8.90736e-05
+RooDoubleCBFast::shapeSig_qqH_hmm_ch5[ x=mh_ggh mean=qqH_cat4_ggh_fpeak width=qqH_cat4_ggh_fsigma alpha1=qqH_cat4_ggh_spline_aL n1=qqH_cat4_ggh_spline_nL alpha2=qqH_cat4_ggh_spline_aR n2=qqH_cat4_ggh_spline_nR ] = 9.27041e-05
+
+functions
+--------
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat0_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat0_ggh) formula="x[0]" ] = -0.00453831
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat1_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat1_ggh) formula="x[0]" ] = -0.0113787
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat2_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat2_ggh) formula="x[0]" ] = -0.00857044
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat3_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat3_ggh) formula="x[0]" ] = 0.458157
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat4_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_1_cat4_ggh) formula="x[0]" ] = 1.16374
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat0_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat0_ggh) formula="x[0]" ] = 0.0246678
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat1_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat1_ggh) formula="x[0]" ] = 0.00665604
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat2_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat2_ggh) formula="x[0]" ] = -0.0580798
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat3_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat3_ggh) formula="x[0]" ] = 0.0306658
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat4_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_2_cat4_ggh) formula="x[0]" ] = 0.224447
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat0_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat0_ggh) formula="x[0]" ] = -0.0167343
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat1_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat1_ggh) formula="x[0]" ] = 0.0121527
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat2_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat2_ggh) formula="x[0]" ] = 0.00750943
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat3_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat3_ggh) formula="x[0]" ] = -0.0546107
+RooFormulaVar::bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat4_ggh_sq[ actualVars=(bwzr_cat_ggh_pdf_transfer_order3_coef_3_cat4_ggh) formula="x[0]" ] = -0.0210721
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_1_cat0_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat0_ggh) formula="x[0]" ] = 0.00296197
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_1_cat1_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat1_ggh) formula="x[0]" ] = -0.0353304
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_1_cat2_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat2_ggh) formula="x[0]" ] = -0.251617
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_1_cat3_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat3_ggh) formula="x[0]" ] = 0.430425
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_1_cat4_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_1_cat4_ggh) formula="x[0]" ] = 0.0842031
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_2_cat0_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_2_cat0_ggh) formula="x[0]" ] = 0.0677487
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_2_cat1_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_2_cat1_ggh) formula="x[0]" ] = 0.0903539
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_2_cat2_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_2_cat2_ggh) formula="x[0]" ] = 0.00319241
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_2_cat3_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_2_cat3_ggh) formula="x[0]" ] = -0.000572879
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_2_cat4_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_2_cat4_ggh) formula="x[0]" ] = 0.0351666
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_3_cat0_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_3_cat0_ggh) formula="x[0]" ] = -0.0165671
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_3_cat1_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_3_cat1_ggh) formula="x[0]" ] = -0.0108765
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_3_cat2_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_3_cat2_ggh) formula="x[0]" ] = 0.0170027
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_3_cat3_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_3_cat3_ggh) formula="x[0]" ] = -0.0455553
+RooFormulaVar::exp_cat_ggh_pdf_transfer_order3_coef_3_cat4_ggh_sq[ actualVars=(exp_cat_ggh_pdf_transfer_order3_coef_3_cat4_ggh) formula="x[0]" ] = -0.00779058
+RooSpline1D::fewz_1j_spl_order1_cat_ggh[ xvar=mh_ggh ] = 0.0499875
+RooSpline1D::fewz_1j_spl_order1_cat_ggh_ch2[ xvar=mh_ggh ] = 0.0499875
+RooSpline1D::fewz_1j_spl_order1_cat_ggh_ch3[ xvar=mh_ggh ] = 0.0499875
+RooSpline1D::fewz_1j_spl_order1_cat_ggh_ch4[ xvar=mh_ggh ] = 0.0499875
+RooSpline1D::fewz_1j_spl_order1_cat_ggh_ch5[ xvar=mh_ggh ] = 0.0499875
+RooFormulaVar::ggH_cat0_ggh_fpeak[ actualVars=(ggH_cat0_ggh_spline_peak,CMS_hmm_peak_cat0_ggh) formula="x[0]*(1+x[1])" ] = 124.684
+RooFormulaVar::ggH_cat0_ggh_fsigma[ actualVars=(ggH_cat0_ggh_spline_sigma,CMS_hmm_sigma_cat0_ggh) formula="x[0]*(1+x[1])" ] = 1.72701
+RooSpline1D::ggH_cat0_ggh_spline_aL[ xvar=MH ] = 1.18504
+RooSpline1D::ggH_cat0_ggh_spline_aR[ xvar=MH ] = 1.49665
+RooSpline1D::ggH_cat0_ggh_spline_nL[ xvar=MH ] = 2.51063
+RooSpline1D::ggH_cat0_ggh_spline_nR[ xvar=MH ] = 5.64165
+RooSpline1D::ggH_cat0_ggh_spline_norm[ xvar=MH ] = 116.515
+RooSpline1D::ggH_cat0_ggh_spline_peak[ xvar=MH ] = 124.684
+RooSpline1D::ggH_cat0_ggh_spline_sigma[ xvar=MH ] = 1.72701
+RooFormulaVar::ggH_cat1_ggh_fpeak[ actualVars=(ggH_cat1_ggh_spline_peak,CMS_hmm_peak_cat1_ggh) formula="x[0]*(1+x[1])" ] = 124.757
+RooFormulaVar::ggH_cat1_ggh_fsigma[ actualVars=(ggH_cat1_ggh_spline_sigma,CMS_hmm_sigma_cat1_ggh) formula="x[0]*(1+x[1])" ] = 1.65647
+RooSpline1D::ggH_cat1_ggh_spline_aL[ xvar=MH ] = 1.26447
+RooSpline1D::ggH_cat1_ggh_spline_aR[ xvar=MH ] = 1.50258
+RooSpline1D::ggH_cat1_ggh_spline_nL[ xvar=MH ] = 2.73052
+RooSpline1D::ggH_cat1_ggh_spline_nR[ xvar=MH ] = 5.38341
+RooSpline1D::ggH_cat1_ggh_spline_norm[ xvar=MH ] = 276.269
+RooSpline1D::ggH_cat1_ggh_spline_peak[ xvar=MH ] = 124.757
+RooSpline1D::ggH_cat1_ggh_spline_sigma[ xvar=MH ] = 1.65647
+RooFormulaVar::ggH_cat2_ggh_fpeak[ actualVars=(ggH_cat2_ggh_spline_peak,CMS_hmm_peak_cat2_ggh) formula="x[0]*(1+x[1])" ] = 124.868
+RooFormulaVar::ggH_cat2_ggh_fsigma[ actualVars=(ggH_cat2_ggh_spline_sigma,CMS_hmm_sigma_cat2_ggh) formula="x[0]*(1+x[1])" ] = 1.50149
+RooSpline1D::ggH_cat2_ggh_spline_aL[ xvar=MH ] = 1.39587
+RooSpline1D::ggH_cat2_ggh_spline_aR[ xvar=MH ] = 1.63424
+RooSpline1D::ggH_cat2_ggh_spline_nL[ xvar=MH ] = 2.84417
+RooSpline1D::ggH_cat2_ggh_spline_nR[ xvar=MH ] = 4.58886
+RooSpline1D::ggH_cat2_ggh_spline_norm[ xvar=MH ] = 279.713
+RooSpline1D::ggH_cat2_ggh_spline_peak[ xvar=MH ] = 124.868
+RooSpline1D::ggH_cat2_ggh_spline_sigma[ xvar=MH ] = 1.50149
+RooFormulaVar::ggH_cat3_ggh_fpeak[ actualVars=(ggH_cat3_ggh_spline_peak,CMS_hmm_peak_cat3_ggh) formula="x[0]*(1+x[1])" ] = 124.953
+RooFormulaVar::ggH_cat3_ggh_fsigma[ actualVars=(ggH_cat3_ggh_spline_sigma,CMS_hmm_sigma_cat3_ggh) formula="x[0]*(1+x[1])" ] = 1.59073
+RooSpline1D::ggH_cat3_ggh_spline_aL[ xvar=MH ] = 1.33628
+RooSpline1D::ggH_cat3_ggh_spline_aR[ xvar=MH ] = 1.58768
+RooSpline1D::ggH_cat3_ggh_spline_nL[ xvar=MH ] = 4.10623
+RooSpline1D::ggH_cat3_ggh_spline_nR[ xvar=MH ] = 3.99846
+RooSpline1D::ggH_cat3_ggh_spline_norm[ xvar=MH ] = 21.5396
+RooSpline1D::ggH_cat3_ggh_spline_peak[ xvar=MH ] = 124.953
+RooSpline1D::ggH_cat3_ggh_spline_sigma[ xvar=MH ] = 1.59073
+RooFormulaVar::ggH_cat4_ggh_fpeak[ actualVars=(ggH_cat4_ggh_spline_peak,CMS_hmm_peak_cat4_ggh) formula="x[0]*(1+x[1])" ] = 124.988
+RooFormulaVar::ggH_cat4_ggh_fsigma[ actualVars=(ggH_cat4_ggh_spline_sigma,CMS_hmm_sigma_cat4_ggh) formula="x[0]*(1+x[1])" ] = 1.62051
+RooSpline1D::ggH_cat4_ggh_spline_aL[ xvar=MH ] = 1.37438
+RooSpline1D::ggH_cat4_ggh_spline_aR[ xvar=MH ] = 1.54051
+RooSpline1D::ggH_cat4_ggh_spline_nL[ xvar=MH ] = 5.9914
+RooSpline1D::ggH_cat4_ggh_spline_nR[ xvar=MH ] = 4.20405
+RooSpline1D::ggH_cat4_ggh_spline_norm[ xvar=MH ] = 1.1368
+RooSpline1D::ggH_cat4_ggh_spline_peak[ xvar=MH ] = 124.988
+RooSpline1D::ggH_cat4_ggh_spline_sigma[ xvar=MH ] = 1.62051
+ProcessNormalization::n_exp_binch1_proc_ggH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch1_proc_qqH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch2_proc_ggH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch2_proc_qqH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch3_proc_ggH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch3_proc_qqH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch4_proc_ggH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch4_proc_qqH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch5_proc_ggH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+ProcessNormalization::n_exp_binch5_proc_qqH_hmm[ thetaList=() asymmThetaList=() otherFactorList=(r) ] = 1
+RooProduct::n_exp_final_binch1_proc_bkg[ n_exp_binch1_proc_bkg * shapeBkg_bkg_ch1__norm ] = 453662
+RooProduct::n_exp_final_binch1_proc_ggH_hmm[ n_exp_binch1_proc_ggH_hmm * shapeSig_ggH_hmm_ch1__norm ] = 116.515
+RooProduct::n_exp_final_binch1_proc_qqH_hmm[ n_exp_binch1_proc_qqH_hmm * shapeSig_qqH_hmm_ch1__norm ] = 5.9644
+RooProduct::n_exp_final_binch2_proc_bkg[ n_exp_binch2_proc_bkg * shapeBkg_bkg_ch2__norm ] = 471962
+RooProduct::n_exp_final_binch2_proc_ggH_hmm[ n_exp_binch2_proc_ggH_hmm * shapeSig_ggH_hmm_ch2__norm ] = 276.269
+RooProduct::n_exp_final_binch2_proc_qqH_hmm[ n_exp_binch2_proc_qqH_hmm * shapeSig_qqH_hmm_ch2__norm ] = 11.0863
+RooProduct::n_exp_final_binch3_proc_bkg[ n_exp_binch3_proc_bkg * shapeBkg_bkg_ch3__norm ] = 282162
+RooProduct::n_exp_final_binch3_proc_ggH_hmm[ n_exp_binch3_proc_ggH_hmm * shapeSig_ggH_hmm_ch3__norm ] = 279.713
+RooProduct::n_exp_final_binch3_proc_qqH_hmm[ n_exp_binch3_proc_qqH_hmm * shapeSig_qqH_hmm_ch3__norm ] = 12.356
+RooProduct::n_exp_final_binch4_proc_bkg[ n_exp_binch4_proc_bkg * shapeBkg_bkg_ch4__norm ] = 9324
+RooProduct::n_exp_final_binch4_proc_ggH_hmm[ n_exp_binch4_proc_ggH_hmm * shapeSig_ggH_hmm_ch4__norm ] = 21.5396
+RooProduct::n_exp_final_binch4_proc_qqH_hmm[ n_exp_binch4_proc_qqH_hmm * shapeSig_qqH_hmm_ch4__norm ] = 5.38126
+RooProduct::n_exp_final_binch5_proc_bkg[ n_exp_binch5_proc_bkg * shapeBkg_bkg_ch5__norm ] = 322
+RooProduct::n_exp_final_binch5_proc_ggH_hmm[ n_exp_binch5_proc_ggH_hmm * shapeSig_ggH_hmm_ch5__norm ] = 1.1368
+RooProduct::n_exp_final_binch5_proc_qqH_hmm[ n_exp_binch5_proc_qqH_hmm * shapeSig_qqH_hmm_ch5__norm ] = 0.768
+RooFormulaVar::qqH_cat0_ggh_fpeak[ actualVars=(qqH_cat0_ggh_spline_peak,CMS_hmm_peak_cat0_ggh) formula="x[0]*(1+x[1])" ] = 124.654
+RooFormulaVar::qqH_cat0_ggh_fsigma[ actualVars=(qqH_cat0_ggh_spline_sigma,CMS_hmm_sigma_cat0_ggh) formula="x[0]*(1+x[1])" ] = 1.75318
+RooSpline1D::qqH_cat0_ggh_spline_aL[ xvar=MH ] = 1.14943
+RooSpline1D::qqH_cat0_ggh_spline_aR[ xvar=MH ] = 1.39246
+RooSpline1D::qqH_cat0_ggh_spline_nL[ xvar=MH ] = 2.47079
+RooSpline1D::qqH_cat0_ggh_spline_nR[ xvar=MH ] = 5.90036
+RooSpline1D::qqH_cat0_ggh_spline_norm[ xvar=MH ] = 5.9644
+RooSpline1D::qqH_cat0_ggh_spline_peak[ xvar=MH ] = 124.654
+RooSpline1D::qqH_cat0_ggh_spline_sigma[ xvar=MH ] = 1.75318
+RooFormulaVar::qqH_cat1_ggh_fpeak[ actualVars=(qqH_cat1_ggh_spline_peak,CMS_hmm_peak_cat1_ggh) formula="x[0]*(1+x[1])" ] = 124.748
+RooFormulaVar::qqH_cat1_ggh_fsigma[ actualVars=(qqH_cat1_ggh_spline_sigma,CMS_hmm_sigma_cat1_ggh) formula="x[0]*(1+x[1])" ] = 1.71504
+RooSpline1D::qqH_cat1_ggh_spline_aL[ xvar=MH ] = 1.2451
+RooSpline1D::qqH_cat1_ggh_spline_aR[ xvar=MH ] = 1.47707
+RooSpline1D::qqH_cat1_ggh_spline_nL[ xvar=MH ] = 3.15032
+RooSpline1D::qqH_cat1_ggh_spline_nR[ xvar=MH ] = 5.30016
+RooSpline1D::qqH_cat1_ggh_spline_norm[ xvar=MH ] = 11.0863
+RooSpline1D::qqH_cat1_ggh_spline_peak[ xvar=MH ] = 124.748
+RooSpline1D::qqH_cat1_ggh_spline_sigma[ xvar=MH ] = 1.71504
+RooFormulaVar::qqH_cat2_ggh_fpeak[ actualVars=(qqH_cat2_ggh_spline_peak,CMS_hmm_peak_cat2_ggh) formula="x[0]*(1+x[1])" ] = 124.837
+RooFormulaVar::qqH_cat2_ggh_fsigma[ actualVars=(qqH_cat2_ggh_spline_sigma,CMS_hmm_sigma_cat2_ggh) formula="x[0]*(1+x[1])" ] = 1.6158
+RooSpline1D::qqH_cat2_ggh_spline_aL[ xvar=MH ] = 1.31656
+RooSpline1D::qqH_cat2_ggh_spline_aR[ xvar=MH ] = 1.52938
+RooSpline1D::qqH_cat2_ggh_spline_nL[ xvar=MH ] = 3.36005
+RooSpline1D::qqH_cat2_ggh_spline_nR[ xvar=MH ] = 4.94808
+RooSpline1D::qqH_cat2_ggh_spline_norm[ xvar=MH ] = 12.356
+RooSpline1D::qqH_cat2_ggh_spline_peak[ xvar=MH ] = 124.837
+RooSpline1D::qqH_cat2_ggh_spline_sigma[ xvar=MH ] = 1.6158
+RooFormulaVar::qqH_cat3_ggh_fpeak[ actualVars=(qqH_cat3_ggh_spline_peak,CMS_hmm_peak_cat3_ggh) formula="x[0]*(1+x[1])" ] = 124.89
+RooFormulaVar::qqH_cat3_ggh_fsigma[ actualVars=(qqH_cat3_ggh_spline_sigma,CMS_hmm_sigma_cat3_ggh) formula="x[0]*(1+x[1])" ] = 1.6558
+RooSpline1D::qqH_cat3_ggh_spline_aL[ xvar=MH ] = 1.35896
+RooSpline1D::qqH_cat3_ggh_spline_aR[ xvar=MH ] = 1.56554
+RooSpline1D::qqH_cat3_ggh_spline_nL[ xvar=MH ] = 3.62972
+RooSpline1D::qqH_cat3_ggh_spline_nR[ xvar=MH ] = 4.77595
+RooSpline1D::qqH_cat3_ggh_spline_norm[ xvar=MH ] = 5.38126
+RooSpline1D::qqH_cat3_ggh_spline_peak[ xvar=MH ] = 124.89
+RooSpline1D::qqH_cat3_ggh_spline_sigma[ xvar=MH ] = 1.6558
+RooFormulaVar::qqH_cat4_ggh_fpeak[ actualVars=(qqH_cat4_ggh_spline_peak,CMS_hmm_peak_cat4_ggh) formula="x[0]*(1+x[1])" ] = 124.956
+RooFormulaVar::qqH_cat4_ggh_fsigma[ actualVars=(qqH_cat4_ggh_spline_sigma,CMS_hmm_sigma_cat4_ggh) formula="x[0]*(1+x[1])" ] = 1.69569
+RooSpline1D::qqH_cat4_ggh_spline_aL[ xvar=MH ] = 1.4112
+RooSpline1D::qqH_cat4_ggh_spline_aR[ xvar=MH ] = 1.48871
+RooSpline1D::qqH_cat4_ggh_spline_nL[ xvar=MH ] = 4.40474
+RooSpline1D::qqH_cat4_ggh_spline_nR[ xvar=MH ] = 5.23044
+RooSpline1D::qqH_cat4_ggh_spline_norm[ xvar=MH ] = 0.768
+RooSpline1D::qqH_cat4_ggh_spline_peak[ xvar=MH ] = 124.956
+RooSpline1D::qqH_cat4_ggh_spline_sigma[ xvar=MH ] = 1.69569
+RooFormulaVar::shapeSig_ggH_hmm_ch1__norm[ actualVars=(ggH_cat0_ggh_spline_norm) formula="x[0]" ] = 116.515
+RooFormulaVar::shapeSig_ggH_hmm_ch2__norm[ actualVars=(ggH_cat1_ggh_spline_norm) formula="x[0]" ] = 276.269
+RooFormulaVar::shapeSig_ggH_hmm_ch3__norm[ actualVars=(ggH_cat2_ggh_spline_norm) formula="x[0]" ] = 279.713
+RooFormulaVar::shapeSig_ggH_hmm_ch4__norm[ actualVars=(ggH_cat3_ggh_spline_norm) formula="x[0]" ] = 21.5396
+RooFormulaVar::shapeSig_ggH_hmm_ch5__norm[ actualVars=(ggH_cat4_ggh_spline_norm) formula="x[0]" ] = 1.1368
+RooFormulaVar::shapeSig_qqH_hmm_ch1__norm[ actualVars=(qqH_cat0_ggh_spline_norm) formula="x[0]" ] = 5.9644
+RooFormulaVar::shapeSig_qqH_hmm_ch2__norm[ actualVars=(qqH_cat1_ggh_spline_norm) formula="x[0]" ] = 11.0863
+RooFormulaVar::shapeSig_qqH_hmm_ch3__norm[ actualVars=(qqH_cat2_ggh_spline_norm) formula="x[0]" ] = 12.356
+RooFormulaVar::shapeSig_qqH_hmm_ch4__norm[ actualVars=(qqH_cat3_ggh_spline_norm) formula="x[0]" ] = 5.38126
+RooFormulaVar::shapeSig_qqH_hmm_ch5__norm[ actualVars=(qqH_cat4_ggh_spline_norm) formula="x[0]" ] = 0.768
+
+datasets
+--------
+RooDataSet::data_obs(mh_ggh,CMS_channel)
+
+named sets
+----------
+ModelConfig_GlobalObservables:(CMS_hmm_peak_cat0_ggh_In,CMS_hmm_sigma_cat0_ggh_In,CMS_hmm_peak_cat1_ggh_In,CMS_hmm_sigma_cat1_ggh_In,CMS_hmm_peak_cat2_ggh_In,CMS_hmm_sigma_cat2_ggh_In,CMS_hmm_peak_cat3_ggh_In,CMS_hmm_sigma_cat3_ggh_In,CMS_hmm_peak_cat4_ggh_In,CMS_hmm_sigma_cat4_ggh_In)
+ModelConfig_NuisParams:(CMS_hmm_peak_cat0_ggh,CMS_hmm_sigma_cat0_ggh,CMS_hmm_peak_cat1_ggh,CMS_hmm_sigma_cat1_ggh,CMS_hmm_peak_cat2_ggh,CMS_hmm_sigma_cat2_ggh,CMS_hmm_peak_cat3_ggh,CMS_hmm_sigma_cat3_ggh,CMS_hmm_peak_cat4_ggh,CMS_hmm_sigma_cat4_ggh)
+ModelConfig_Observables:(mh_ggh,CMS_channel)
+ModelConfig_POI:(r)
+ModelConfig_bonly_GlobalObservables:(CMS_hmm_peak_cat0_ggh_In,CMS_hmm_sigma_cat0_ggh_In,CMS_hmm_peak_cat1_ggh_In,CMS_hmm_sigma_cat1_ggh_In,CMS_hmm_peak_cat2_ggh_In,CMS_hmm_sigma_cat2_ggh_In,CMS_hmm_peak_cat3_ggh_In,CMS_hmm_sigma_cat3_ggh_In,CMS_hmm_peak_cat4_ggh_In,CMS_hmm_sigma_cat4_ggh_In)
+ModelConfig_bonly_NuisParams:(CMS_hmm_peak_cat0_ggh,CMS_hmm_sigma_cat0_ggh,CMS_hmm_peak_cat1_ggh,CMS_hmm_sigma_cat1_ggh,CMS_hmm_peak_cat2_ggh,CMS_hmm_sigma_cat2_ggh,CMS_hmm_peak_cat3_ggh,CMS_hmm_sigma_cat3_ggh,CMS_hmm_peak_cat4_ggh,CMS_hmm_sigma_cat4_ggh)
+ModelConfig_bonly_Observables:(mh_ggh,CMS_channel)
+ModelConfig_bonly_POI:(r)
+POI:(r)
+globalObservables:(CMS_hmm_peak_cat0_ggh_In,CMS_hmm_sigma_cat0_ggh_In,CMS_hmm_peak_cat1_ggh_In,CMS_hmm_sigma_cat1_ggh_In,CMS_hmm_peak_cat2_ggh_In,CMS_hmm_sigma_cat2_ggh_In,CMS_hmm_peak_cat3_ggh_In,CMS_hmm_sigma_cat3_ggh_In,CMS_hmm_peak_cat4_ggh_In,CMS_hmm_sigma_cat4_ggh_In)
+nuisances:(CMS_hmm_peak_cat0_ggh,CMS_hmm_sigma_cat0_ggh,CMS_hmm_peak_cat1_ggh,CMS_hmm_sigma_cat1_ggh,CMS_hmm_peak_cat2_ggh,CMS_hmm_sigma_cat2_ggh,CMS_hmm_peak_cat3_ggh,CMS_hmm_sigma_cat3_ggh,CMS_hmm_peak_cat4_ggh,CMS_hmm_sigma_cat4_ggh)
+observables:(mh_ggh,CMS_channel)
+
+generic objects
+---------------
+RooStats::ModelConfig::ModelConfig
+RooStats::ModelConfig::ModelConfig_bonly
+RooArgSet::discreteParams
