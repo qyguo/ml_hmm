@@ -258,61 +258,55 @@ class ApplyXGBHandler(object):
         #TODO put this to the config
         # for data in tqdm(read_root(sorted(f_list), key=self._inputTree, columns=branches, chunksize=self._chunksize), bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}', desc='XGB INFO: Applying BDTs to %s samples' % category):
         with uproot.recreate(output_path) as output_file:
-            out_data = pd.DataFrame()
-            for filename in tqdm(sorted(f_list), desc='XGB INFO: Applying BDTs to %s samples' % category, bar_format='{desc}: {percentage:3.0f}%|{bar:20}{r_bar}'):
-                file = uproot.open(filename)
-                print("branches: ", branches)
-                for data in file[self._inputTree].iterate(branches, library='pd', step_size=self._chunksize):
-                    data = self.preselect(data)
-                    # data = data[data.Z_sublead_lepton_pt >= 15]
-                    # if category == "DYJetsToLL":
-                    #     data = data[data.n_iso_photons == 0]
-                    # if category != "data_fake" and category != "mc_true" and category != "mc_med":
-                    #     pass
-                    #     # data = data[data.gamma_mvaID_WP80 > 0] #TODO: check this one
-                    #     data = data[data.gamma_mvaID_WPL > 0] #TODO: check this one
+            print("branches: ", branches)
+            tree_written = False
+            iterator = uproot.iterate(
+                sorted(f_list),
+                self._inputTree,
+                branches,
+                library='pd',
+                step_size=self._chunksize
+            )
 
-                    for i in range(4):
+            for data in tqdm(iterator, desc='XGB INFO: Applying BDTs to %s samples' % category, bar_format='{percentage:3.0f}%|{bar:20}{r_bar}'):
+                data = self.preselect(data)
+                if data.empty:
+                    continue
 
-                        #data[self.H_mass] = 125
-                        #if ( data[data.diMufsr_rc_mass] > 110 & data[data.diMufsr_rc_mass] < 115 ) | ( data[data.diMufsr_rc_mass] > 135 & data[data.diMufsr_rc_mass] < 150 ):
-                        #    data[data.diMufsr_rc_mass] = 125
-                        #if self._FixSBH125:
-                        #    mask = ((data['diMufsr_rc_mass'] > 110) & (data['diMufsr_rc_mass'] < 115)) | ((data['diMufsr_rc_mass'] > 135) & (data['diMufsr_rc_mass'] < 150))
-                        #    data.loc[mask, 'diMufsr_rc_mass'] = 125
+                chunk_results = []
+                for i in range(4):
+                    data_s = data[data[self.randomIndex] % 4 == i]
+                    if data_s.empty:
+                        continue
 
-                        data_s = data[data[self.randomIndex]%4 == i]
-                        data_o = data_s[outputbraches]
+                    data_o = data_s[outputbraches].copy()
 
-                        for model in self.train_variables.keys():
-                            x_Events = data_s[self.train_variables[model]]
-                            dEvents = xgb.DMatrix(x_Events)
-                            scores = self.m_models[model][i].predict(dEvents)
-                            if len(scores) > 0:
-                                scores_t = self.m_tsfs[model][i].transform(scores.reshape(-1,1)).reshape(-1)
-                            else:
-                                scores_t = scores
-                        
-                            xgb_basename = self.models[model]
-                            data_o[xgb_basename] = scores
-                            data_o[xgb_basename+'_t'] = scores_t
+                    for model in self.train_variables.keys():
+                        x_events = data_s[self.train_variables[model]].to_numpy(copy=False)
+                        d_events = xgb.DMatrix(x_events)
+                        scores = self.m_models[model][i].predict(d_events)
+                        if len(scores) > 0:
+                            scores_t = self.m_tsfs[model][i].transform(scores.reshape(-1, 1)).reshape(-1)
+                        else:
+                            scores_t = scores
 
-                        out_data = pd.concat([out_data, data_o], ignore_index=True, sort=False)
-                #out_data.to_root(output_path, key='test', mode='a', index=False)
-                
-            # Convert DataFrame to dictionary of arrays
-            #out_data_dict = out_data.to_dict('list')
+                        xgb_basename = self.models[model]
+                        data_o[xgb_basename] = scores
+                        data_o[xgb_basename + '_t'] = scores_t
 
-            if not out_data.empty:
-                print("not empty")
-                # Convert DataFrame to dictionary of arrays
-                out_data_dict = out_data.to_dict('list')
-                # Write the dictionary of arrays to the ROOT file
-                output_file["test"] = out_data_dict
-            else:
-                print("No data to write to ROOT file.")
-            #output_file['test'] = out_data_dict
-            del out_data, data_s, data_o
+                    chunk_results.append(data_o)
+
+                if not chunk_results:
+                    continue
+
+                out_chunk = pd.concat(chunk_results, ignore_index=True, sort=False)
+                out_data_dict = {col: out_chunk[col].to_numpy(copy=False) for col in out_chunk.columns}
+
+                if not tree_written:
+                    output_file["test"] = out_data_dict
+                    tree_written = True
+                else:
+                    output_file["test"].extend(out_data_dict)
 
 
 def main():
