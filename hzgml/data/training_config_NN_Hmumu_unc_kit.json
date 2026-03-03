@@ -1,12 +1,12 @@
 {"common":   {"train_signal": ["VBFHToMuMu_M125"],
               "train_background": ["DY_105To160","EWK_LLJJ_M105To160","TTTo2L2Nu","TTToSemiLep","DY_105To160_VBFFilter"],
               "train_variables": [
-                  "diMufsr_rc_mass","diMu-mass_resolution_abs","diMu-mass_resolution",
+                  "diMufsr_kit_BSC_mass","diMu-mass_resolution_abs","diMu-mass_resolution",
                   "dijet_mass", "log_dijet_mass",
                   "z_star", "R_pT",
                   "delta_eta_jj",
                   "SoftActivityJetNjets5", "min_delta_eta_dimu_jets",
-                  "diMufsr_rc_pt","diMufsr_rc_eta","log_diMufsr_rc_pt",
+                  "diMufsr_kit_BSC_pt","diMufsr_kit_BSC_eta","log_diMufsr_kit_BSC_pt",
                   "jet1_pt", "jet1_eta", "jet1_phi",
                   "jet2_pt", "jet2_eta", "jet2_phi"
               ],
@@ -69,14 +69,14 @@
  "two_jet":  {"+train_signal": [],
               "train_mc_background": ["DY_105To160","TTTo2L2Nu"],
               "+preselections": [],
-              "inputTree": "data_two_jet_m110To150_VBF",
+              "inputTree": "data_two_jet_m110To150",
               "train_variables": [
-                  "diMufsr_rc_mass","diMu-mass_resolution_abs","diMu-mass_resolution",
+                  "diMufsr_kit_BSC_mass","diMu-mass_resolution_abs","diMu-mass_resolution",
                   "dijet_mass", "log_dijet_mass",
                   "z_star", "R_pT",
                   "delta_eta_jj",
                   "SoftActivityJetNjets5", "min_delta_eta_dimu_jets",
-                  "diMufsr_rc_pt","diMufsr_rc_eta","log_diMufsr_rc_pt",
+                  "diMufsr_kit_BSC_pt","diMufsr_kit_BSC_eta","log_diMufsr_kit_BSC_pt",
                   "jet1_pt", "jet1_eta", "jet1_phi",
                   "jet2_pt", "jet2_eta", "jet2_phi"
                                    ],

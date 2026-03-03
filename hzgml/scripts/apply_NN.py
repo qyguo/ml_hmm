@@ -78,6 +78,7 @@ class ApplyXGBHandler(object):
         self._inputTree = region if region else 'inclusive'
         self._inputTree = 'two_jet_m110To150_v2'
         self._inputTree = 'two_jet_m110To150'
+        self._inputTree = 'data_two_jet_m110To150_VBF'
         self._modelFolder = ''
         self._outputFolder = ''
         self._chunksize = 500000
@@ -229,6 +230,7 @@ class ApplyXGBHandler(object):
                     del bst
 
     def loadTransformer(self):
+        import joblib
         
         if self.models:
             for model in self.models:
@@ -237,7 +239,8 @@ class ApplyXGBHandler(object):
                 for i in range(1,5):
                     #tsf = pickle.load(open('%s/tsf_%s_%d.pkl'%(self._modelFolder, model, i), "rb" ), encoding = 'latin1' )
                     #model is two_jet ...
-                    tsf = pickle.load(open('%s/DNN_tsf_%d.pkl'%(self._modelFolder, i), "rb" ), encoding = 'latin1' )
+                    #tsf = pickle.load(open('%s/DNN_tsf_%d.pkl'%(self._modelFolder, i), "rb" ), encoding = 'latin1' )
+                    tsf = joblib.load('%s/DNN_tsf_%d_new.joblib' % (self._modelFolder, i))
                     self.m_tsfs[model].append(tsf)
 
     def loadScaler(self):
@@ -254,8 +257,10 @@ class ApplyXGBHandler(object):
         outputbraches = copy.deepcopy(self._outbranches)
         branches = copy.deepcopy(self._branches)
         # branches += ["Z_sublead_lepton_pt", "gamma_mvaID_WP80", "gamma_mvaID_WPL"]
-        branches += ["eventWeight", "trg_single_mu24", "nmuons", "source_year"]
-        outputbraches += ["eventWeight", "trg_single_mu24", "nmuons", "source_year"]
+        #branches += ["eventWeight", "trg_single_mu24", "nmuons", "source_year", "njets"]
+        #outputbraches += ["eventWeight", "trg_single_mu24", "nmuons", "source_year", "njets"]
+        branches += ["eventWeight", "trg_single_mu24", "nmuons"]
+        outputbraches += ["eventWeight", "trg_single_mu24", "nmuons"]
         #data_s = None
         #data_o = None
 
@@ -326,6 +331,7 @@ class ApplyXGBHandler(object):
                             data_o[NN_basename+'_t'] = scores_t
                             data_o[NN_basename+'_arctanh'] = np.arctanh(scores)
                             data_o[NN_basename+'_t_arctanh'] = np.arctanh(scores_t)
+                            data_o["source_year"]=int(self._year)
 
                         out_data = pd.concat([out_data, data_o], ignore_index=True, sort=False)
                         #out_data.to_root(output_path, key='test', mode='a', index=False)
@@ -361,7 +367,8 @@ def main():
     #with open('data/inputs_config_22EE_herwig.json') as f:
     #with open('data/inputs_config_22EE.json') as f:
     #with open('data/inputs_config_2223.json') as f:
-    with open('data/inputs_config_2223_dy.json') as f:
+    #with open('data/inputs_config_2223_dy.json') as f:
+    with open('data/inputs_config_2223_ggH.json') as f:
         config = json.load(f)
     sample_list = config['sample_list']
 
