@@ -7,21 +7,26 @@ from pdb import set_trace
 
 def calc_sig(sig, bkg,s_err,b_err):
 
-  ntot = sig + bkg
+    ntot = sig + bkg
 
-  #if(sig <= 0): return 0, 0
-  #if(bkg <= 0): return 0, 0
+    # if(sig <= 0): return 0, 0
+    # if(bkg <= 0): return 0, 0
 
-  #Counting experiment
-  significance = sqrt(2*((ntot * log(ntot/bkg)) - sig)) # why a 2 is here
-#   significance = sig / sqrt(bkg)
+    # Counting experiment
+    significance = sqrt(2*((ntot * log(ntot/bkg)) - sig))
+    # significance = sig / sqrt(bkg)
 
-  #error on significance
-  numer = sqrt((log(ntot/bkg)*s_err)**2 + ((log(1+(sig/bkg)) - (sig/bkg))*b_err)**2)
-  uncert = (numer/significance)
-#   uncert = sqrt((s_err**2/bkg) + (significance/2/bkg*b_err)**2)
+    # error on significance
+    numer = sqrt((log(ntot/bkg)*s_err)**2 + ((log(1+(sig/bkg)) - (sig/bkg))*b_err)**2)
+    uncert = (numer/significance)
+    # uncert = sqrt((s_err**2/bkg) + (significance/2/bkg*b_err)**2)
 
-  return significance, uncert
+    return significance, uncert
+
+def calc_sig_only(sig, bkg):
+    ntot = sig + bkg
+    significance = sqrt(2*((ntot * log(ntot/bkg)) - sig))
+    return significance
 
 def sum_z(zs):
     sumu=0
@@ -197,7 +202,6 @@ class categorizer(object):
         htemp.Delete()
 
     def fit(self, bl, br, nbin, minN=5, floatB=False, earlystop=-1, pbar=False):
-
         if nbin == 1:
 
             if floatB: return [], 0
@@ -245,7 +249,82 @@ class categorizer(object):
                 if stop == earlystop: break
 
             return bmax, zmax
-
+        
+    def fit_dp(self, _, nscan, nbin, minN=5, floatB=False, earlystop=-1, pbar=False):
+        
+        # assert floatB==False, "floatB=True may give different behaviour when using fit_dp, please check! If behaviour is same, you can comment out this line."
+        
+        print("You are using new method to do categorize! Some behaviour may be different from the old one!")
+        
+        # invalid input
+        if nbin <= 1:
+            print("nbin must be larger than 1!")
+            return -1, -1
+        if nbin > nscan:
+            print("nbin must be less than nscan!")
+            return -1, -1
+        
+        dp = {}
+        zlist = {} # store max z of certain number of edges
+        
+        # initialize zlist
+        for i in range(0, nbin):
+            zlist[i] = -1
+        
+        # initialize dp for 0 edge
+        for right in range(2, nscan + 2):
+            nbkg = self.h_bkg.Integral(1, right - 1)
+            if nbkg < minN:
+                dp[(0, right)] = ([], -10) # invalid
+                continue
+            if floatB:
+                dp[(0, right)] = ([], 0)
+            else:
+                nsig = self.h_sig.Integral(1, right - 1)
+                if self.reweight:
+                    if self.h_bkg_rw_den.Integral(1, right - 1) == 0: print("what!!!", 1, right - 1)
+                    nbkg *= self.h_bkg_rw_num.Integral(1, right - 1) / self.h_bkg_rw_den.Integral(1, right - 1)
+                z = calc_sig_only(nsig, nbkg)
+                dp[(0, right)] = ([1], z)
+        zlist[0] = dp[(0, nscan + 1)][1]
+        
+        stop = 0
+        for i in tqdm(range(1, nbin), ncols=70):
+            for right in range(2, nscan + 2):
+                best_result = ([], 0)
+                for edge in range(2, right):
+                    left_z = dp[(i - 1, edge)][1]
+                    nsig = self.h_sig.Integral(edge, right - 1)
+                    nbkg = self.h_bkg.Integral(edge, right - 1)
+                    if self.reweight:
+                        if self.h_bkg_rw_den.Integral(edge, right - 1) == 0: print("what!!!", edge, right - 1)
+                        nbkg *= self.h_bkg_rw_num.Integral(edge, right - 1) / self.h_bkg_rw_den.Integral(edge, right - 1)
+                    right_z = calc_sig_only(nsig, nbkg)
+                    if nbkg < minN:
+                        total_z = -10 # invalid
+                    else:
+                        if left_z < 0 or right_z < 0:
+                            total_z = -10
+                        else:
+                            total_z = sqrt(left_z**2 + right_z**2)
+                    if total_z > best_result[1]:
+                        best_result = (dp[(i - 1, edge)][0] + [edge], total_z)
+                dp[(i, right)] = best_result
+            zlist[i] = dp[(i, nscan + 1)][1]
+            
+            if zlist[i] <= zlist[i - 1]:
+                stop += 1
+                if stop == earlystop:
+                    return dp[(i, nscan + 1)]
+            else:
+                stop = 0
+        
+        return dp[(nbin - 1, nscan + 1)]
+                
+            
+        
+        
+        
 def fit_BDT(hname, hist, function='Epoly2', printMessage=False):
 
     if not printMessage: ROOT.RooMsgService.instance().setGlobalKillBelow(ROOT.RooFit.ERROR)  #WARNING
